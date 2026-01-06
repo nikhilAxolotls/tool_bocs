@@ -1,0 +1,538 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tool_bocs/util/colors.dart';
+import 'package:tool_bocs/util/font_family.dart';
+
+class CreateGivePostScreen extends StatefulWidget {
+  const CreateGivePostScreen({super.key});
+
+  @override
+  State<CreateGivePostScreen> createState() => _CreateGivePostScreenState();
+}
+
+class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
+  double _diameter = 5;
+  bool _isTemporary = true;
+  String _selectedCondition = 'New';
+  bool _isPriceSelected = true;
+  RangeValues _priceRange = const RangeValues(10, 100);
+  bool _isNegotiable = false;
+  bool _notifyPartnersOnly = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //app bar here
+            SizedBox(height: 20.h),
+            _buildAppBar(),
+            Divider(
+              color: greyColor.withOpacity(0.4),
+              thickness: 1,
+              height: 10.h,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 8.h),
+              padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.r),
+                border: Border.all(color: Colors.grey.shade200),
+              ),
+              child: Column(
+                children: [
+                  _buildLocationSection(),
+                  SizedBox(height: 20.h),
+                  _buildTradeDetailsSection(),
+                  SizedBox(height: 20.h),
+                  _buildAddPhotosSection(),
+                  SizedBox(height: 20.h),
+                  _buildItemDetailsSection(),
+                  SizedBox(height: 20.h),
+                  _buildReturnSection(),
+                  SizedBox(height: 20.h),
+                  _buildWalletAndNotificationSection(),
+                  SizedBox(height: 30.h),
+                  _buildPostButton(),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 30.h),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLocationSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Location',
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.bold,
+            fontFamily: FontFamily.openSans,
+          ),
+        ),
+        SizedBox(height: 12.h),
+        Text('Pickup Area', style: _labelStyle()),
+        SizedBox(height: 8.h),
+        _buildTextField('Detect your Location',
+            prefixIcon: Icons.location_on_outlined),
+        SizedBox(height: 12.h),
+        Container(
+          width: double.infinity,
+          height: 45.h,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF3F4F6),
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            'Detect GPS',
+            style: TextStyle(
+              color: Colors.black54,
+              fontWeight: FontWeight.w600,
+              fontSize: 14.sp,
+            ),
+          ),
+        ),
+        SizedBox(height: 20.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Area Diameter', style: _labelStyle()),
+            Text('${_diameter.toInt()} km', style: _labelStyle()),
+          ],
+        ),
+        Slider(
+          value: _diameter,
+          min: 1,
+          max: 50,
+          activeColor: defoultColor,
+          inactiveColor: Colors.grey.shade200,
+          onChanged: (val) => setState(() => _diameter = val),
+        ),
+        Text(
+          'Partners within this radius will see your item.',
+          style: TextStyle(color: Colors.grey, fontSize: 10.sp),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTradeDetailsSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Trade Details', style: _labelStyle(size: 14)),
+        SizedBox(height: 8.h),
+        Text('Trade Type',
+            style: TextStyle(color: Colors.grey, fontSize: 12.sp)),
+        SizedBox(height: 12.h),
+        Container(
+          height: 45.h,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF3F4F6),
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          child: Row(
+            children: [
+              _buildToggleButton('Temporary Exchange', _isTemporary, () {
+                setState(() => _isTemporary = true);
+              }),
+              _buildToggleButton('Permanent Exchange', !_isTemporary, () {
+                setState(() => _isTemporary = false);
+              }),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAddPhotosSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Add Photos', style: _labelStyle(size: 16)),
+        SizedBox(height: 12.h),
+        Container(
+          width: double.infinity,
+          height: 150.h,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF3F4F6),
+            borderRadius: BorderRadius.circular(12.r),
+            border: Border.all(
+                color: Colors.grey.shade300, style: BorderStyle.solid),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.camera_alt_outlined, color: Colors.grey, size: 30.sp),
+              SizedBox(height: 8.h),
+              Text(
+                'Add up to 5 photos',
+                style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 12.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(4, (index) => _buildSmallPhotoBox()),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildItemDetailsSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Item Details', style: _labelStyle(size: 16)),
+        SizedBox(height: 12.h),
+        Text('Item Name', style: _labelStyle()),
+        SizedBox(height: 8.h),
+        _buildTextField('Enter item name'),
+        SizedBox(height: 16.h),
+        Text('Category', style: _labelStyle()),
+        SizedBox(height: 8.h),
+        _buildDropdown('Select Category'),
+        SizedBox(height: 16.h),
+        Text('Condition', style: _labelStyle()),
+        SizedBox(height: 12.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildConditionChip('New'),
+            _buildConditionChip('Like New'),
+            _buildConditionChip('Used'),
+          ],
+        ),
+        SizedBox(height: 16.h),
+        Text('Description', style: _labelStyle()),
+        SizedBox(height: 8.h),
+        _buildTextField('Describe your product here...', maxLines: 4),
+      ],
+    );
+  }
+
+  Widget _buildReturnSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('What do you want in return ?', style: _labelStyle(size: 16)),
+        SizedBox(height: 16.h),
+        Container(
+          height: 45.h,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF3F4F6),
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          child: Row(
+            children: [
+              _buildToggleButton('Price', _isPriceSelected, () {
+                setState(() => _isPriceSelected = true);
+              }),
+              _buildToggleButton('Item', !_isPriceSelected, () {
+                setState(() => _isPriceSelected = false);
+              }),
+            ],
+          ),
+        ),
+        if (_isPriceSelected) ...[
+          SizedBox(height: 20.h),
+          Container(
+            padding: EdgeInsets.all(16.w),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey.shade200),
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Desired Price Range : \$${_priceRange.start.toInt()} - \$${_priceRange.end.toInt()}',
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
+                ),
+                RangeSlider(
+                  values: _priceRange,
+                  min: 0,
+                  max: 500,
+                  activeColor: defoultColor,
+                  inactiveColor: Colors.grey.shade200,
+                  onChanged: (val) => setState(() => _priceRange = val),
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 24,
+                      child: Switch(
+                        value: _isNegotiable,
+                        activeColor: defoultColor,
+                        onChanged: (val) => setState(() => _isNegotiable = val),
+                      ),
+                    ),
+                    SizedBox(width: 8.w),
+                    Text('Negotiable',
+                        style: TextStyle(color: Colors.grey, fontSize: 13.sp)),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildWalletAndNotificationSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.all(16.w),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12.r),
+            border: Border.all(color: Colors.grey.shade100),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Wallet', style: _labelStyle(size: 14)),
+              SizedBox(height: 8.h),
+              Row(
+                children: [
+                  Icon(Icons.account_balance_wallet_outlined,
+                      color: defoultColor, size: 18.sp),
+                  SizedBox(width: 8.w),
+                  Text('5 rs per trade',
+                      style: TextStyle(
+                          fontSize: 13.sp, fontWeight: FontWeight.w600)),
+                ],
+              ),
+              SizedBox(height: 20.h),
+              Text('Notification Settings', style: _labelStyle(size: 14)),
+              SizedBox(height: 12.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Notify Partners Only',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 13.sp)),
+                        SizedBox(height: 4.h),
+                        Text(
+                          'Only Partners you\'ve traded with before will receive notifications.',
+                          style: TextStyle(color: Colors.grey, fontSize: 10.sp),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Switch(
+                    value: _notifyPartnersOnly,
+                    activeColor: defoultColor,
+                    onChanged: (val) =>
+                        setState(() => _notifyPartnersOnly = val),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPostButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 50.h,
+      child: ElevatedButton(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          backgroundColor: defoultColor,
+          shape: RoundedRectangleManager.roundedRadius(10.r),
+          elevation: 0,
+        ),
+        child: Text(
+          'Post Item',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 16.sp,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(String hint,
+      {IconData? prefixIcon, int maxLines = 1}) {
+    return TextField(
+      maxLines: maxLines,
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: TextStyle(color: Colors.grey, fontSize: 13.sp),
+        prefixIcon: prefixIcon != null
+            ? Icon(prefixIcon, color: Colors.grey, size: 20.sp)
+            : null,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.r),
+          borderSide: BorderSide(color: Colors.grey.shade200),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.r),
+          borderSide: BorderSide(color: Colors.grey.shade200),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.r),
+          borderSide: BorderSide(color: defoultColor),
+        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+      ),
+    );
+  }
+
+  Widget _buildDropdown(String hint) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.r),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          hint:
+              Text(hint, style: TextStyle(color: Colors.grey, fontSize: 13.sp)),
+          isExpanded: true,
+          items: [],
+          onChanged: (val) {},
+        ),
+      ),
+    );
+  }
+
+  Widget _buildToggleButton(String label, bool isSelected, VoidCallback onTap) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: isSelected ? defoultColor : Colors.transparent,
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? Colors.white : Colors.black54,
+              fontWeight: FontWeight.w600,
+              fontSize: 12.sp,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSmallPhotoBox() {
+    return Container(
+      width: 70.w,
+      height: 70.w,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF3F4F6),
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+    );
+  }
+
+  Widget _buildConditionChip(String label) {
+    bool isSelected = _selectedCondition == label;
+    return GestureDetector(
+      onTap: () => setState(() => _selectedCondition = label),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+        decoration: BoxDecoration(
+          color: isSelected ? defoultColor : Colors.white,
+          borderRadius: BorderRadius.circular(25.r),
+          border: Border.all(
+              color: isSelected ? defoultColor : Colors.grey.shade200),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                      color: defoultColor.withOpacity(0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4))
+                ]
+              : null,
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.grey,
+            fontWeight: FontWeight.bold,
+            fontSize: 13.sp,
+          ),
+        ),
+      ),
+    );
+  }
+
+  TextStyle _labelStyle({double size = 12}) {
+    return TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: size.sp,
+      fontFamily: FontFamily.openSans,
+    );
+  }
+
+  Widget _buildAppBar() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.only(top: 20.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: blackColor, size: 22),
+            onPressed: () => Navigator.pop(context),
+          ),
+          SizedBox(width: 45.w),
+          Center(
+            child: Text(
+              'Create Give Post',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18.sp,
+                fontFamily: FontFamily.openSans,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class RoundedRectangleManager {
+  static RoundedRectangleBorder roundedRadius(double radius) {
+    return RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius));
+  }
+}

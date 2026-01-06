@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tool_bocs/routes/app_route_pages.dart';
+import 'core/constants/app_theme.dart';
+import 'core/controller/theme_controller.dart';
+
+import 'routes/app_routes.dart';
+
+class ToolBocsApp extends StatelessWidget {
+  const ToolBocsApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final themeController = context.watch<ThemeController>();
+
+    return MaterialApp(
+      title: 'Tool Bocs',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeController.themeMode,
+      initialRoute: AppRoutes.splash,
+      routes: AppPages.routes,
+    );
+  }
+}
