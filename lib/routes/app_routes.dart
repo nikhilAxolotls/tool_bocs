@@ -10,4 +10,18 @@ class AppRoutes {
   static const chat = '/chat';
   static const dummyChat = '/dummyChat';
   static const createGivePost = '/createGivePost';
+  static const notifications = '/notifications';
+  static const editProfile = '/editProfile';
+  static const tradeHistory = '/tradeHistory';
+  static const blockedUsers = '/blockedUsers';
+  static const helpSupport = '/helpSupport';
+  static const transactionHistory = '/transactionHistory';
+  static const tradeStart = '/tradeStart';
+  static const tradeOffer = '/tradeOffer';
+  static const tradeStep1 = '/tradeStep1';
+  static const tradeCompletion = '/tradeCompletion';
+  static const tradeSuccess = '/tradeSuccess';
+  static const tradeDetails = '/tradeDetails';
+  static const termsConditions = '/termsConditions';
+  static const privacyPolicy = '/privacyPolicy';
 }

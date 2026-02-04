@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:tool_bocs/features/chat/model/chat_model.dart';
 import 'package:tool_bocs/util/colors.dart';
 import 'package:tool_bocs/util/font_family.dart';
+import 'package:tool_bocs/core/widgets/user_review_dialog.dart';
 
 class DummyChatScreen extends StatefulWidget {
   const DummyChatScreen({super.key});
@@ -94,6 +95,19 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
+      actions: [
+        IconButton(
+          padding: EdgeInsets.only(right: 16.w),
+          icon: const Icon(Icons.more_vert),
+          color: blackColor,
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => const UserReviewDialog(),
+            );
+          },
+        ),
+      ],
       centerTitle: true,
       title: Text(
         'Message',
@@ -215,7 +229,7 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
 
   Widget _buildInput() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 24),
+      padding: const EdgeInsets.fromLTRB(8, 16, 8, 24),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -226,7 +240,7 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
       child: Row(
         children: [
           IconButton(
-            icon: const Icon(Icons.add, color: Colors.lightBlue, size: 28),
+            icon: Icon(Icons.attach_file, color: appColor, size: 28),
             onPressed: _showAttachmentMenu,
           ),
           Expanded(
@@ -248,8 +262,8 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
           ),
           const SizedBox(width: 8),
           Container(
-            decoration: const BoxDecoration(
-              color: Color(0xFF1D5CBB),
+            decoration: BoxDecoration(
+              color: appColor,
               shape: BoxShape.circle,
             ),
             child: IconButton(

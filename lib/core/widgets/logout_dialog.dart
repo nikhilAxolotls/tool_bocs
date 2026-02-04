@@ -1,0 +1,128 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tool_bocs/util/colors.dart';
+import 'package:tool_bocs/util/font_family.dart';
+
+class LogoutDialog extends StatelessWidget {
+  const LogoutDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.white,
+      child: _buildDialogContent(context),
+    );
+  }
+
+  Widget _buildDialogContent(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(15.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Align(
+          //   alignment: Alignment.topRight,
+          //   child: IconButton(
+          //     onPressed: () => Navigator.pop(context),
+          //     icon: Icon(Icons.close, size: 25.sp),
+          //     padding: EdgeInsets.zero,
+          //     constraints: const BoxConstraints(),
+          //   ),
+          // ),
+          // /SizedBox(height: 10.h),
+          Container(
+            height: 100.r,
+            width: 100.r,
+            decoration: BoxDecoration(
+              //shape: BoxShape.circle,
+              borderRadius: BorderRadius.circular(50.r),
+              border: Border.all(color: defoultColor, width: 2.w),
+            ),
+            child: Icon(Icons.logout, size: 60.r, color: defoultColor),
+          ),
+          // SvgPicture.asset(
+          //   'assets/icons/logout1.svg',
+          //   height: 100.r,
+          //   width: 100.r,
+          //   color: defoultColor,
+          // ),
+
+          SizedBox(height: 10.h),
+          Text(
+            'Are you sure you want to logout ?',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 15.sp,
+              fontWeight: FontWeight.w700,
+              color: blackColor,
+              fontFamily: FontFamily.openSans,
+            ),
+          ),
+          SizedBox(height: 20.h),
+          Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Container(
+                    height: 45.h,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEEEEEE),
+                      borderRadius: BorderRadius.circular(12.r),
+                      border: Border.all(
+                          color: greyColor.withOpacity(0.5), width: 1.w),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w700,
+                        color: blackColor,
+                        fontFamily: FontFamily.openSans,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 15.w),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    // Implement Logout Logic
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: 45.h,
+                    decoration: BoxDecoration(
+                      color: defoultColor,
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Logout',
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w700,
+                        color: whiteColor,
+                        fontFamily: FontFamily.openSans,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

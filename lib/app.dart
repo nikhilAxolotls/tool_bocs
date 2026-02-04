@@ -14,7 +14,7 @@ class ToolBocsApp extends StatelessWidget {
     final themeController = context.watch<ThemeController>();
 
     return MaterialApp(
-      title: 'Tool Bocs',
+      title: 'ToolBocs',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

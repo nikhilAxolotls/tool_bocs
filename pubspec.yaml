@@ -42,4 +42,9 @@ flutter:
  
   assets:
     - assets/
+    - assets/icons/chat.svg
+    - assets/icons/give.svg
+    - assets/icons/take.svg
+    - assets/icons/logout.svg
+    - assets/icons/logout1.svg
   

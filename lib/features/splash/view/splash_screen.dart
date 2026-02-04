@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tool_bocs/features/splash/controller/splash_controller.dart';
+import 'package:tool_bocs/util/colors.dart';
+import 'package:tool_bocs/util/font_family.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -71,9 +73,25 @@ class _SplashScreenState extends State<SplashScreen>
                   decoration: BoxDecoration(
                     color: Colors.white,
                   ),
-                  child: Image.asset(
-                    'assets/logo.png',
-                    fit: BoxFit.cover,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/logo.png',
+                        fit: BoxFit.cover,
+                      ),
+                      Text(
+                        'Tool Bocs',
+                        style: TextStyle(
+                          fontFamily: FontFamily.openSans,
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                          color: appColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

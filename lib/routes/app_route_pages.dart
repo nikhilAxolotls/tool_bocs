@@ -9,7 +9,21 @@ import 'package:tool_bocs/features/login_and_signup/view/signup_screen.dart';
 import 'package:tool_bocs/features/home/view/product_details_screen.dart';
 import 'package:tool_bocs/features/splash/view/onbording_screen.dart';
 import 'package:tool_bocs/features/splash/view/splash_screen.dart';
-import 'package:tool_bocs/features/trades/view/create_give_post_screen.dart';
+import 'package:tool_bocs/features/notifications/view/notifications_screen.dart';
+import 'package:tool_bocs/features/profile/view/edit_profile_screen.dart';
+import 'package:tool_bocs/features/trades/view/create_give_Take_post_screen.dart';
+import 'package:tool_bocs/features/trades/view/trade_history_screen.dart';
+import 'package:tool_bocs/features/profile/view/blocked_users_screen.dart';
+import 'package:tool_bocs/features/profile/view/help_support_screen.dart';
+import 'package:tool_bocs/features/trades/view/transaction_history_screen.dart';
+import 'package:tool_bocs/features/trade_steps_flow/view/trade_start_screen3.dart';
+import 'package:tool_bocs/features/trade_steps_flow/view/trade_offer_screen2.dart';
+import 'package:tool_bocs/features/trade_steps_flow/view/trade_return_screen1.dart';
+import 'package:tool_bocs/features/trade_steps_flow/view/trade_completion_screen4.dart';
+import 'package:tool_bocs/features/trade_steps_flow/view/trade_success_screen5.dart';
+import 'package:tool_bocs/features/trades/view/trade_details_screen.dart';
+import 'package:tool_bocs/features/profile/view/terms_conditions_screen.dart';
+import 'package:tool_bocs/features/profile/view/privacy_policy_screen.dart';
 
 import 'app_routes.dart';
 
@@ -26,5 +40,19 @@ class AppPages {
     AppRoutes.createGivePost: (_) => const CreateGivePostScreen(),
     AppRoutes.signUp: (_) => const SignUpScreen(),
     AppRoutes.productDetails: (_) => const ProductDetailsScreen(),
+    AppRoutes.notifications: (_) => const NotificationsScreen(),
+    AppRoutes.editProfile: (_) => const EditProfileScreen(),
+    AppRoutes.tradeHistory: (_) => const TradeHistoryScreen(),
+    AppRoutes.blockedUsers: (_) => const BlockedUsersScreen(),
+    AppRoutes.helpSupport: (_) => const HelpSupportScreen(),
+    AppRoutes.transactionHistory: (_) => const TransactionHistoryScreen(),
+    AppRoutes.tradeStart: (_) => const TradeStartScreen(),
+    AppRoutes.tradeOffer: (_) => const TradeOfferScreen(),
+    AppRoutes.tradeStep1: (_) => const TradeReturnSearchScreen(),
+    AppRoutes.tradeCompletion: (_) => const TradeCompletionScreen(),
+    AppRoutes.tradeSuccess: (_) => const TradeSuccessScreen(),
+    AppRoutes.tradeDetails: (_) => const TradeDetailsScreen(),
+    AppRoutes.termsConditions: (_) => const TermsConditionsScreen(),
+    AppRoutes.privacyPolicy: (_) => const PrivacyPolicyScreen(),
   };
 }

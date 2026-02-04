@@ -3,12 +3,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tool_bocs/core/controller/shimmer_controller.dart';
 import 'package:tool_bocs/core/widgets/shimmer_box.dart';
+import 'package:tool_bocs/core/widgets/logout_dialog.dart';
+import 'package:tool_bocs/features/profile/view/setting_screen.dart';
+import 'package:tool_bocs/routes/app_routes.dart';
 import 'package:tool_bocs/util/colors.dart';
 import 'package:tool_bocs/util/font_family.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({
+    super.key,
+  });
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final shimmer = context.watch<ShimmerController>();
@@ -30,9 +40,11 @@ class ProfileScreen extends StatelessWidget {
                         SizedBox(height: 15.h),
                         _buildReviewsSection(),
                         SizedBox(height: 15.h),
-                        _buildTradeHistoryStats(),
+                        _buildTradeHistoryStats(context),
                         SizedBox(height: 15.h),
-                        _buildSettingsList(),
+                        _buildSettingsList(context),
+                        //SizedBox(height: 15.h),
+                        // _logoutButton(context),
                         SizedBox(height: 40.h),
                       ],
                     ),
@@ -57,9 +69,17 @@ class ProfileScreen extends StatelessWidget {
                 bottomRight: Radius.circular(30.r),
               ),
             ),
-            padding: EdgeInsets.fromLTRB(25.w, 80.h, 25.w, 40.h),
+            padding: EdgeInsets.fromLTRB(25.w, 50.h, 25.w, 40.h),
             child: Column(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ShimmerBox(height: 24.h, width: 100.w),
+                    ShimmerBox(height: 30.h, width: 80.w, radius: 8.r),
+                  ],
+                ),
+                SizedBox(height: 20.h),
                 Row(
                   children: [
                     ShimmerBox(height: 96.r, width: 96.r, radius: 48.r),
@@ -164,16 +184,20 @@ class ProfileScreen extends StatelessWidget {
                       Row(
                         children: [
                           Expanded(
-                              child: ShimmerBox(
-                                  height: 100.h,
-                                  width: double.infinity,
-                                  radius: 10.r)),
+                            child: ShimmerBox(
+                              height: 100.h,
+                              width: double.infinity,
+                              radius: 10.r,
+                            ),
+                          ),
                           SizedBox(width: 16.w),
                           Expanded(
-                              child: ShimmerBox(
-                                  height: 100.h,
-                                  width: double.infinity,
-                                  radius: 10.r)),
+                            child: ShimmerBox(
+                              height: 100.h,
+                              width: double.infinity,
+                              radius: 10.r,
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(height: 16.h),
@@ -237,39 +261,60 @@ class ProfileScreen extends StatelessWidget {
           bottomRight: Radius.circular(30.r),
         ),
       ),
-      padding: EdgeInsets.fromLTRB(25.w, 50.h, 25.w, 40.h),
+      padding: EdgeInsets.fromLTRB(25.w, 50.h, 20.w, 40.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-              ),
+              // IconButton(
+              //   onPressed: () {},
+              //   icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+              // ),
+
               Text(
                 'Profile',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18.sp,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.w700,
                   fontFamily: FontFamily.openSans,
                 ),
               ),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.edit, color: Colors.white, size: 16),
-                label: Text(
-                  'Edit',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.openSans,
-                  ),
-                ),
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingScreen(),
+                    ),
+                  );
+                },
+                icon: Icon(Icons.menu, color: Colors.white, size: 28.sp),
+                //icon: Icon(Icons.menu, color: Colors.white, size: 28.sp),
+                // icon: Icon(Icons.more_vert, color: Colors.white, size: 28.sp),
               ),
+
+              // TextButton.icon(
+              //   onPressed: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) => const EditProfileScreen()),
+              //     );
+              //   },
+              //   icon: const Icon(Icons.edit, color: Colors.white, size: 22),
+              //   label: Text(
+              //     'Edit',
+              //     style: TextStyle(
+              //       color: Colors.white,
+              //       fontSize: 15.sp,
+              //       fontWeight: FontWeight.w600,
+              //       fontFamily: FontFamily.openSans,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           SizedBox(height: 20.h),
@@ -510,7 +555,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTradeHistoryStats() {
+  Widget _buildTradeHistoryStats(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
@@ -537,60 +582,79 @@ class ProfileScreen extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                  child: _buildStatCard(
-                      'Total Gives', '35', Colors.red, Icons.card_giftcard)),
+                child: _buildStatCard(
+                    'Total Gives', '35', Colors.red, Icons.card_giftcard),
+              ),
               SizedBox(width: 16.w),
               Expanded(
-                  child: _buildStatCard(
-                      'Total Takes', '28', Colors.orange, Icons.handshake)),
+                child: _buildStatCard(
+                    'Total Takes', '28', Colors.orange, Icons.redeem_outlined),
+              ),
+              SizedBox(width: 16.w),
+              Expanded(
+                child: _buildStatCard(
+                    'Total Trades', '63', Colors.orange, Icons.handshake),
+              ),
             ],
           ),
-          SizedBox(height: 16.h),
-          Container(
-            padding: EdgeInsets.all(16.w),
-            decoration: BoxDecoration(
-              color: greyColor.withOpacity(0.1),
-              border: Border.all(color: greyColor.withOpacity(0.2)),
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    Icon(Icons.handshake_outlined,
-                        color: defoultColor, size: 28.sp),
-                    SizedBox(height: 4.h),
-                    Text(
-                      '63',
-                      style: TextStyle(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.bold,
-                          color: defoultColor),
-                    ),
-                    Text(
-                      'Total Trades',
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: blackColor,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: FontFamily.openSans,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 10.h),
-          TextButton(
-            onPressed: () {},
-            child: Text(
-              'View Trade History',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 14.sp,
+          // SizedBox(height: 16.h),
+          // Container(
+          //   padding: EdgeInsets.all(16.w),
+          //   decoration: BoxDecoration(
+          //     color: greyColor.withOpacity(0.1),
+          //     border: Border.all(color: greyColor.withOpacity(0.2)),
+          //     borderRadius: BorderRadius.circular(10.r),
+          //   ),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       Column(
+          //         children: [
+          //           Icon(Icons.handshake_outlined,
+          //               color: defoultColor, size: 28.sp),
+          //           SizedBox(height: 4.h),
+          //           Text(
+          //             '63',
+          //             style: TextStyle(
+          //                 fontSize: 24.sp,
+          //                 fontWeight: FontWeight.bold,
+          //                 color: defoultColor),
+          //           ),
+          //           Text(
+          //             'Total Trades',
+          //             style: TextStyle(
+          //               fontSize: 12.sp,
+          //               color: blackColor,
+          //               fontWeight: FontWeight.w500,
+          //               fontFamily: FontFamily.openSans,
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          SizedBox(height: 20.h),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, AppRoutes.tradeHistory);
+            },
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 50.w),
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
+              width: double.infinity,
+              decoration: BoxDecoration(
                 color: defoultColor,
+                borderRadius: BorderRadius.circular(8.r),
+              ),
+              child: Text(
+                'View Trade History',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14.sp,
+                  color: whiteColor,
+                ),
               ),
             ),
           ),
@@ -602,7 +666,7 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildStatCard(
       String label, String value, Color color, IconData icon) {
     return Container(
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 10.w),
       decoration: BoxDecoration(
         color: greyColor.withOpacity(0.1),
         border: Border.all(color: greyColor.withOpacity(0.2)),
@@ -611,11 +675,10 @@ class ProfileScreen extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, color: color, size: 28.sp),
-          SizedBox(height: 4.h),
           Text(
             value,
             style: TextStyle(
-              fontSize: 28.sp,
+              fontSize: 22.sp,
               fontWeight: FontWeight.w800,
               color: defoultColor,
               fontFamily: FontFamily.openSans,
@@ -635,45 +698,108 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingsList() {
+  Widget _buildSettingsList(BuildContext context) {
     return Container(
       width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         children: [
-          _buildSettingsItem(Icons.settings_outlined, 'Settings'),
-          Divider(height: 1, color: greyColor.withOpacity(0.4), thickness: 1),
-          _buildSettingsItem(Icons.wb_sunny_outlined, 'Theme'),
-          Divider(height: 1, color: greyColor.withOpacity(0.4), thickness: 1),
-          _buildSettingsItem(Icons.visibility_outlined, 'Visibility options'),
-          Divider(height: 1, color: greyColor.withOpacity(0.4), thickness: 1),
-          _buildSettingsItem(Icons.person_outline, 'Account Centre'),
-          Divider(height: 1, color: greyColor.withOpacity(0.4), thickness: 1),
-          _buildSettingsItem(Icons.messenger_outline, 'Report a Problem'),
+          _buildProfileSettingItem(
+            context,
+            icon: Icons.wb_sunny_outlined,
+            label: 'Themes',
+            onTap: () {},
+          ),
+          _buildDivider(),
+          _buildProfileSettingItem(
+            context,
+            icon: Icons.sync_alt,
+            label: 'Transaction History',
+            onTap: () =>
+                Navigator.pushNamed(context, AppRoutes.transactionHistory),
+          ),
+          _buildDivider(),
+          _buildProfileSettingItem(
+            context,
+            icon: Icons.bookmark_border,
+            label: 'Saved Profiles',
+            onTap: () {},
+          ),
+          _buildDivider(),
+          _buildProfileSettingItem(
+            context,
+            icon: Icons.block_outlined,
+            label: 'Blocked Users',
+            onTap: () => Navigator.pushNamed(context, AppRoutes.blockedUsers),
+          ),
+          _buildDivider(),
+          _buildProfileSettingItem(
+            context,
+            icon: Icons.settings_outlined,
+            label: 'Settings',
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SettingScreen()),
+            ),
+          ),
+          _buildDivider(),
+          _buildProfileSettingItem(
+            context,
+            icon: Icons.login_outlined,
+            label: 'Logout',
+            onTap: () => showDialog(
+              context: context,
+              builder: (context) => const LogoutDialog(),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildSettingsItem(IconData icon, String label) {
+  Widget _buildProfileSettingItem(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
     return ListTile(
-      leading: Icon(icon, color: Colors.black87),
-      title: Text(label,
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            fontFamily: FontFamily.openSans,
-          )),
+      onTap: onTap,
+      contentPadding: EdgeInsets.zero,
+      leading: Icon(icon, color: Colors.grey.shade600, size: 24.sp),
+      title: Text(
+        label,
+        style: TextStyle(
+          fontSize: 15.sp,
+          fontWeight: FontWeight.w600,
+          color: blackColor,
+          fontFamily: FontFamily.openSans,
+        ),
+      ),
       trailing: Icon(
         Icons.arrow_forward_ios,
-        size: 16,
-        color: blackColor,
+        size: 16.sp,
+        color: greyColor,
       ),
-      onTap: () {},
+    );
+  }
+
+  Widget _buildDivider() {
+    return Divider(
+      height: 1,
+      thickness: 1,
+      color: Colors.grey.shade100,
     );
   }
 }

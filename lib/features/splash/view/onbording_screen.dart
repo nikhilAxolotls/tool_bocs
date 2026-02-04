@@ -28,20 +28,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   setScreen() async {
     Timer(
       const Duration(seconds: 0),
-      () => StorageService.getFirstuser() != null
-          ? Navigator.pushReplacement(
+      () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => BoardingPage()),
-            )
-          : StorageService.getRemember() != null
-              ? Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                )
-              : Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => BottomNavBarScreen()),
-                ),
+            ),
     );
   }
 
@@ -70,6 +60,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 }
 
 class BoardingPage extends StatefulWidget {
+  const BoardingPage({super.key});
+
   @override
   // ignore: library_private_types_in_public_api
   _BoardingScreenState createState() => _BoardingScreenState();
@@ -79,6 +71,7 @@ class _BoardingScreenState extends State<BoardingPage> {
   // creating all the widget before making our home screeen
   OnBoardingController controller = OnBoardingController();
 
+  @override
   void initState() {
     super.initState();
 

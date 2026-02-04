@@ -15,12 +15,12 @@ class OnBoardingModel {
     OnBoardingModel(
       image: "assets/onBoarding1.png",
       heading: "Sell What You Don’t Need",
-      subtext: "Turn your unused items intoinstant cash with just a few taps.",
+      subtext: "Turn your unused items into instant cash with just a few taps.",
     ),
     OnBoardingModel(
       image: "assets/onBoarding2.png",
       heading: "Buy Quality. Pay Less.",
-      subtext: "Discover verified listings near youat the best prices.",
+      subtext: "Discover verified listings near you at the best prices.",
     ),
     OnBoardingModel(
       image: "assets/onBoarding3.png",

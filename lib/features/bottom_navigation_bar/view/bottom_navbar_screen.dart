@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:tool_bocs/core/controller/shimmer_controller.dart';
 import 'package:tool_bocs/features/home/view/home_screen.dart';
@@ -7,6 +8,7 @@ import 'package:tool_bocs/features/profile/view/profile_screen.dart';
 import 'package:tool_bocs/features/trades/view/give_screen.dart';
 import 'package:tool_bocs/features/trades/view/take_screen.dart';
 import 'package:tool_bocs/util/colors.dart';
+import 'package:tool_bocs/features/chat/view/chat_list_screen.dart';
 import '../controller/bottom_navbar_controller.dart';
 
 class BottomNavBarScreen extends StatelessWidget {
@@ -19,6 +21,7 @@ class BottomNavBarScreen extends StatelessWidget {
     final List<Widget> screens = [
       const HomeScreen(),
       const GiveScreen(),
+      const ChatListScreen(),
       const TakeScreen(),
       const ProfileScreen(),
     ];
@@ -45,20 +48,43 @@ class BottomNavBarScreen extends StatelessWidget {
             TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp),
         unselectedLabelStyle:
             TextStyle(fontWeight: FontWeight.normal, fontSize: 12.sp),
-        items: const [
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.card_giftcard_outlined),
-            activeIcon: Icon(Icons.card_giftcard),
+            icon: SvgPicture.asset(
+              'assets/icons/give.svg',
+              colorFilter: ColorFilter.mode(greyColor, BlendMode.srcIn),
+            ), // Icon(Icons.card_giftcard_outlined),
+            activeIcon: SvgPicture.asset(
+              'assets/icons/give.svg',
+              colorFilter: ColorFilter.mode(defoultColor, BlendMode.srcIn),
+            ), // Icon(Icons.card_giftcard),
             label: 'Give',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.handshake_outlined),
-            activeIcon: Icon(Icons.handshake),
+            icon: SvgPicture.asset(
+              'assets/icons/chat.svg',
+              colorFilter: ColorFilter.mode(greyColor, BlendMode.srcIn),
+            ), // Icon(Icons.chat_outlined),
+            activeIcon: SvgPicture.asset(
+              'assets/icons/chat.svg',
+              colorFilter: ColorFilter.mode(defoultColor, BlendMode.srcIn),
+            ), // Icon(Icons.chat),
+            label: 'Chat',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/icons/take.svg',
+              colorFilter: ColorFilter.mode(greyColor, BlendMode.srcIn),
+            ), // Icon(Icons.save_alt_outlined),
+            activeIcon: SvgPicture.asset(
+              'assets/icons/take.svg',
+              colorFilter: ColorFilter.mode(defoultColor, BlendMode.srcIn),
+            ), // Icon(Icons.save_alt),
             label: 'Take',
           ),
           BottomNavigationBarItem(

@@ -1,0 +1,99 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tool_bocs/util/colors.dart';
+import 'package:tool_bocs/util/font_family.dart';
+import 'package:tool_bocs/routes/app_routes.dart';
+
+class TradeSuccessScreen extends StatelessWidget {
+  const TradeSuccessScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 120.w,
+                height: 120.w,
+                decoration: BoxDecoration(
+                  color: defoultColor.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child:
+                    Icon(Icons.check_circle, color: defoultColor, size: 80.sp),
+              ),
+              SizedBox(height: 32.h),
+              Text(
+                'Trade Confirmed !',
+                style: TextStyle(
+                  fontSize: 28.sp,
+                  fontWeight: FontWeight.w800,
+                  fontFamily: FontFamily.openSans,
+                  color: blackColor,
+                ),
+              ),
+              SizedBox(height: 16.h),
+              Text(
+                'Your trade request has been sent to Riya. You can now chat with them to coordinate the handover.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: greyColor,
+                  fontWeight: FontWeight.w500,
+                  height: 1.5,
+                ),
+              ),
+              SizedBox(height: 48.h),
+              _buildActionButton(
+                label: 'View Trade Details',
+                onPressed: () => Navigator.pushReplacementNamed(
+                    context, AppRoutes.tradeDetails),
+                isPrimary: true,
+              ),
+              SizedBox(height: 12.h),
+              _buildActionButton(
+                label: 'Go to Home',
+                onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                    context, AppRoutes.bottomNavBar, (route) => false),
+                isPrimary: false,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButton(
+      {required String label,
+      required VoidCallback onPressed,
+      required bool isPrimary}) {
+    return SizedBox(
+      width: double.infinity,
+      height: 54.h,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isPrimary ? defoultColor : Colors.white,
+          side: isPrimary ? null : BorderSide(color: defoultColor, width: 1.5),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+          elevation: 0,
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: isPrimary ? Colors.white : defoultColor,
+            fontWeight: FontWeight.w700,
+            fontSize: 16.sp,
+          ),
+        ),
+      ),
+    );
+  }
+}

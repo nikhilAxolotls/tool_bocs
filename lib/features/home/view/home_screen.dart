@@ -3,11 +3,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tool_bocs/core/controller/shimmer_controller.dart';
 import 'package:tool_bocs/core/widgets/shimmer_box.dart';
+import 'package:tool_bocs/features/notifications/view/notifications_screen.dart';
 import 'package:tool_bocs/routes/app_routes.dart';
 import 'package:tool_bocs/util/colors.dart';
+import 'package:tool_bocs/util/font_family.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  double distance = 5.0;
 
   @override
   Widget build(BuildContext context) {
@@ -15,49 +24,61 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: shimmer.isLoading
-          ? _buildShimmer(context)
-          : Column(
-              children: [
-                _buildHeader(context),
-                Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.all(16.w),
+      body: Column(
+        children: [
+          _buildHeader(context),
+          Expanded(
+            child: shimmer.isLoading
+                ? _buildShimmer(context)
+                : Column(
                     children: [
-                      _buildProductCard(
-                        context,
-                        title: 'iPhone 12 (128GB)',
-                        owner: 'RIYA',
-                        category: 'Food Giver',
-                        distance: '2.5 km away',
-                        rating: '4.8',
-                        actionLabel: 'Take',
+                      _buildDistanceSection(context),
+                      Divider(
+                        color: greyColor.withOpacity(0.4),
+                        thickness: 1.h,
+                        height: 1.h,
                       ),
-                      SizedBox(height: 12.h),
-                      _buildProductCard(
-                        context,
-                        title: 'iPhone 12 (128GB)',
-                        owner: 'RIYA',
-                        category: 'Food Giver',
-                        distance: '2.5 km away',
-                        rating: '4.8',
-                        actionLabel: 'Take',
-                      ),
-                      SizedBox(height: 12.h),
-                      _buildProductCard(
-                        context,
-                        title: 'iPhone 12 (128GB)',
-                        owner: 'RIYA',
-                        category: 'Food Giver',
-                        distance: '2.5 km away',
-                        rating: '4.8',
-                        actionLabel: 'Take',
+                      Expanded(
+                        child: ListView(
+                          padding: EdgeInsets.all(16.w),
+                          children: [
+                            _buildProductCard(
+                              context,
+                              title: 'iPhone 12 (128GB)',
+                              owner: 'RIYA',
+                              category: 'Food Giver',
+                              distance: '2.5 km away',
+                              rating: '4.8',
+                              actionLabel: 'Take',
+                            ),
+                            SizedBox(height: 12.h),
+                            _buildProductCard(
+                              context,
+                              title: 'iPhone 12 (128GB)',
+                              owner: 'RIYA',
+                              category: 'Food Giver',
+                              distance: '2.5 km away',
+                              rating: '4.8',
+                              actionLabel: 'Take',
+                            ),
+                            SizedBox(height: 12.h),
+                            _buildProductCard(
+                              context,
+                              title: 'iPhone 12 (128GB)',
+                              owner: 'RIYA',
+                              category: 'Food Giver',
+                              distance: '2.5 km away',
+                              rating: '4.8',
+                              actionLabel: 'Take',
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -67,13 +88,14 @@ class HomeScreen extends StatelessWidget {
         top: MediaQuery.of(context).padding.top + 20.h,
         left: 16.w,
         right: 16.w,
-        bottom: 16.h,
+        bottom: 8.h,
       ),
       decoration: BoxDecoration(
         color: themeColor, // Use themeColor from colors.dart
       ),
       child: Column(
         children: [
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -92,38 +114,93 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Stack(
-                children: [
-                  Icon(Icons.notifications_none_outlined,
-                      color: Colors.white, size: 28.sp),
-                  Positioned(
-                    right: 0.w,
-                    top: 2.h,
-                    child: Container(
-                      width: 15.w,
-                      height: 15.h,
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(2.w),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(15.r),
-                      ),
-                      child: Text(
-                        '1',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 8.sp,
-                          fontWeight: FontWeight.w900,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+              Spacer(),
+              /*
+              // chat icon
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ChatListScreen(),
                     ),
-                  )
-                ],
+                  );
+                },
+                child: Stack(
+                  children: [
+                    Icon(Icons.chat_outlined, color: Colors.white, size: 28.sp),
+                    Positioned(
+                      right: 0.w,
+                      top: 0.h,
+                      child: Container(
+                        width: 15.w,
+                        height: 15.h,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(2.w),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(15.r),
+                        ),
+                        child: Text(
+                          '1',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 8.sp,
+                            fontWeight: FontWeight.w900,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(width: 20.w),
+              */
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationsScreen()),
+                  );
+                },
+                child: Stack(
+                  children: [
+                    Icon(Icons.notifications_none_outlined,
+                        color: Colors.white, size: 28.sp),
+                    Positioned(
+                      right: 0.w,
+                      top: 2.h,
+                      child: Container(
+                        width: 15.w,
+                        height: 15.h,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(2.w),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(15.r),
+                        ),
+                        child: Text(
+                          '1',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 8.sp,
+                            fontWeight: FontWeight.w900,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ],
           ),
+          SizedBox(height: 6.h),
+          /*
           SizedBox(height: 18.h),
+         
           Row(
             children: [
               Expanded(
@@ -155,17 +232,86 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 12.w),
-              Container(
-                height: 47.h,
-                width: 47.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.r),
+              Padding(
+                padding: EdgeInsets.only(left: 12.w),
+                child: InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => const FilterBottomSheet(),
+                    );
+                  },
+                  child: Container(
+                    height: 47.h,
+                    width: 47.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Icon(Icons.tune, color: themeColor, size: 24.sp),
+                  ),
                 ),
-                child: Icon(Icons.tune, color: themeColor, size: 24.sp),
               ),
             ],
+          ),
+          */
+        ],
+      ),
+    );
+  }
+
+  // distance section
+  Widget _buildDistanceSection(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+      decoration: BoxDecoration(
+        color: whiteColor,
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Distance',
+            style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w700,
+              color: blackColor,
+              fontFamily: FontFamily.openSans,
+            ),
+          ),
+          SizedBox(height: 5.h),
+          Row(
+            children: [
+              Expanded(
+                child: Slider(
+                  padding: EdgeInsets.zero,
+                  value: distance,
+                  min: 0,
+                  max: 50,
+                  activeColor: defoultColor,
+                  inactiveColor: Colors.grey.shade200,
+                  thumbColor: defoultColor,
+                  onChanged: (val) => setState(() => distance = val),
+                ),
+              ),
+              SizedBox(width: 10.w),
+              Text(
+                '${distance.round()} km',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w800,
+                  color: blackColor,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 5.h),
+          Text(
+            'Show items near you',
+            style: TextStyle(fontSize: 10.sp, color: greyColor),
           ),
         ],
       ),
@@ -275,13 +421,21 @@ class HomeScreen extends StatelessWidget {
                       SizedBox(height: 4.h),
                       Row(
                         children: [
-                          Icon(Icons.star, color: Colors.amber, size: 16.sp),
-                          SizedBox(width: 4.w),
                           Text(
                             "$rating ",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 12.sp),
                           ),
+                          SizedBox(width: 4.w),
+                          ...List.generate(
+                            5,
+                            (index) => Icon(
+                              Icons.star,
+                              color: amberColor,
+                              size: 13.sp,
+                            ),
+                          ),
+                          SizedBox(width: 4.w),
                           Text(
                             "(Person rating)",
                             style:
@@ -326,35 +480,31 @@ class HomeScreen extends StatelessWidget {
   Widget _buildShimmer(BuildContext context) {
     return Column(
       children: [
-        // Header Shimmer
-        Container(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 16.h,
-            left: 16.w,
-            right: 16.w,
-            bottom: 16.h,
-          ),
-          color: themeColor,
+        // Distance Section Shimmer
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ShimmerBox(height: 20.h, width: 120.w),
-                  ShimmerBox(height: 28.h, width: 28.w, radius: 14.r),
-                ],
-              ),
-              SizedBox(height: 16.h),
+              ShimmerBox(height: 18.h, width: 80.w),
+              SizedBox(height: 10.h),
               Row(
                 children: [
                   Expanded(
-                      child: ShimmerBox(height: 45.h, width: double.infinity)),
-                  SizedBox(width: 12.w),
-                  ShimmerBox(height: 45.h, width: 45.h),
+                      child: ShimmerBox(height: 20.h, width: double.infinity)),
+                  SizedBox(width: 10.w),
+                  ShimmerBox(height: 18.h, width: 40.w),
                 ],
               ),
+              SizedBox(height: 8.h),
+              ShimmerBox(height: 12.h, width: 120.w),
             ],
           ),
+        ),
+        Divider(
+          color: greyColor.withOpacity(0.4),
+          thickness: 1.h,
+          height: 1.h,
         ),
         // Product Card Shimmers
         Expanded(
@@ -362,11 +512,12 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.all(16.w),
             itemCount: 3,
             itemBuilder: (context, index) => Padding(
-              padding: EdgeInsets.only(bottom: 16.h),
+              padding: EdgeInsets.only(bottom: 12.h),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(color: Colors.grey.withOpacity(0.2)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -384,12 +535,17 @@ class HomeScreen extends StatelessWidget {
                               ShimmerBox(height: 16.h, width: 150.w),
                             ],
                           ),
-                          ShimmerBox(height: 14.h, width: 80.w),
+                          ShimmerBox(height: 14.h, width: 60.w),
                         ],
                       ),
                     ),
-                    ShimmerBox(
-                        height: 180.h, width: double.infinity, radius: 0),
+                    AspectRatio(
+                      aspectRatio: 14 / 9,
+                      child: ShimmerBox(
+                          height: double.infinity,
+                          width: double.infinity,
+                          radius: 0),
+                    ),
                     Padding(
                       padding: EdgeInsets.all(12.w),
                       child: Row(
@@ -403,7 +559,7 @@ class HomeScreen extends StatelessWidget {
                               ShimmerBox(height: 16.h, width: 100.w),
                             ],
                           ),
-                          ShimmerBox(height: 35.h, width: 80.w, radius: 6.r),
+                          ShimmerBox(height: 35.h, width: 100.w, radius: 6.r),
                         ],
                       ),
                     ),

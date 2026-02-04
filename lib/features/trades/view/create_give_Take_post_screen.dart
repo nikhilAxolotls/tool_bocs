@@ -18,6 +18,11 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
   RangeValues _priceRange = const RangeValues(10, 100);
   bool _isNegotiable = false;
   bool _notifyPartnersOnly = true;
+  bool _isHomemade = false;
+  bool _isStoreBought = false;
+  String _returnSelectedCondition = 'New';
+  bool _isReturnHomemade = false;
+  bool _isReturnStoreBought = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +48,13 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10.r),
                 border: Border.all(color: Colors.grey.shade200),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade200,
+                    blurRadius: 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
               child: Column(
                 children: [
@@ -50,18 +62,92 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
                   SizedBox(height: 20.h),
                   _buildTradeDetailsSection(),
                   SizedBox(height: 20.h),
-                  _buildAddPhotosSection(),
-                  SizedBox(height: 20.h),
-                  _buildItemDetailsSection(),
-                  SizedBox(height: 20.h),
-                  _buildReturnSection(),
-                  SizedBox(height: 20.h),
-                  _buildWalletAndNotificationSection(),
-                  SizedBox(height: 30.h),
-                  _buildPostButton(),
                 ],
               ),
             ),
+            SizedBox(height: 8.h),
+            //add item details section
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 8.h),
+              padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.r),
+                border: Border.all(color: Colors.grey.shade200),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade200,
+                    blurRadius: 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  _buildItemDetailsSection(),
+                  // SizedBox(height: 20.h),
+                  // _buildReturnSection(),
+                  // SizedBox(height: 20.h),
+                  // _buildWalletAndNotificationSection(),
+                  // SizedBox(height: 30.h),
+                  // _buildPostButton(),
+                ],
+              ),
+            ),
+            SizedBox(height: 8.h),
+            //return section
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 8.h),
+              padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.r),
+                border: Border.all(color: Colors.grey.shade200),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade200,
+                    blurRadius: 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  _buildReturnSection(),
+                  // SizedBox(height: 20.h),
+                  // _buildWalletAndNotificationSection(),
+                  // SizedBox(height: 30.h),
+                  // _buildPostButton(),
+                ],
+              ),
+            ),
+            SizedBox(height: 8.h),
+            //wallet section
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 8.h),
+              padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.r),
+                border: Border.all(color: Colors.grey.shade200),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade200,
+                    blurRadius: 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  _buildWalletAndNotificationSection(),
+                ],
+              ),
+            ),
+
+            //build post button
+            SizedBox(height: 20.h),
+            _buildPostButton(),
 
             SizedBox(height: 30.h),
           ],
@@ -113,14 +199,17 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
             Text('${_diameter.toInt()} km', style: _labelStyle()),
           ],
         ),
+        SizedBox(height: 15.h),
         Slider(
           value: _diameter,
           min: 1,
           max: 50,
+          padding: EdgeInsets.zero,
           activeColor: defoultColor,
           inactiveColor: Colors.grey.shade200,
           onChanged: (val) => setState(() => _diameter = val),
         ),
+        SizedBox(height: 15.h),
         Text(
           'Partners within this radius will see your item.',
           style: TextStyle(color: Colors.grey, fontSize: 10.sp),
@@ -163,8 +252,8 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Add Photos', style: _labelStyle(size: 16)),
-        SizedBox(height: 12.h),
+        Text('Add Photos', style: _labelStyle(size: 14)),
+        SizedBox(height: 15.h),
         Container(
           width: double.infinity,
           height: 150.h,
@@ -204,7 +293,9 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
         Text('Item Name', style: _labelStyle()),
         SizedBox(height: 8.h),
         _buildTextField('Enter item name'),
-        SizedBox(height: 16.h),
+        SizedBox(height: 12.h),
+        _buildAddPhotosSection(),
+        SizedBox(height: 20.h),
         Text('Category', style: _labelStyle()),
         SizedBox(height: 8.h),
         _buildDropdown('Select Category'),
@@ -220,9 +311,67 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
           ],
         ),
         SizedBox(height: 16.h),
-        Text('Description', style: _labelStyle()),
+        Text('Write a Note', style: _labelStyle()),
         SizedBox(height: 8.h),
         _buildTextField('Describe your product here...', maxLines: 4),
+        SizedBox(height: 12.h),
+        Row(
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  height: 24.w,
+                  width: 24.w,
+                  child: Checkbox(
+                    value: _isHomemade,
+                    activeColor: defoultColor,
+                    onChanged: (val) {
+                      setState(() {
+                        _isHomemade = val ?? false;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(width: 8.w),
+                Text(
+                  'Homemade',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontFamily: FontFamily.openSans,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(width: 20.w),
+            Row(
+              children: [
+                SizedBox(
+                  height: 24.w,
+                  width: 24.w,
+                  child: Checkbox(
+                    value: _isStoreBought,
+                    activeColor: defoultColor,
+                    onChanged: (val) {
+                      setState(() {
+                        _isStoreBought = val ?? false;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(width: 8.w),
+                Text(
+                  'Store bought',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontFamily: FontFamily.openSans,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -266,14 +415,17 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
                   style:
                       TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
                 ),
+                SizedBox(height: 15.h),
                 RangeSlider(
                   values: _priceRange,
                   min: 0,
                   max: 500,
+                  padding: EdgeInsets.zero,
                   activeColor: defoultColor,
                   inactiveColor: Colors.grey.shade200,
                   onChanged: (val) => setState(() => _priceRange = val),
                 ),
+                SizedBox(height: 25.h),
                 Row(
                   children: [
                     SizedBox(
@@ -292,8 +444,134 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
               ],
             ),
           ),
-        ],
+        ] else ...[
+          _buildReturnItemDetailsSection(),
+        ]
       ],
+    );
+  }
+
+  Widget _buildReturnItemDetailsSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 20.h),
+        Text('Item Name', style: _labelStyle()),
+        SizedBox(height: 8.h),
+        _buildTextField('Enter item name'),
+        SizedBox(height: 20.h),
+        _buildAddPhotosSection(),
+        SizedBox(height: 20.h),
+        Text('Category', style: _labelStyle()),
+        SizedBox(height: 8.h),
+        _buildDropdown('Select Category'),
+        SizedBox(height: 16.h),
+        Text('Condition', style: _labelStyle()),
+        SizedBox(height: 12.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildReturnConditionChip('New'),
+            _buildReturnConditionChip('Like New'),
+            _buildReturnConditionChip('Used'),
+          ],
+        ),
+        SizedBox(height: 16.h),
+        Text('Description', style: _labelStyle()),
+        SizedBox(height: 8.h),
+        _buildTextField('Describe your product here...', maxLines: 4),
+        SizedBox(height: 12.h),
+        Row(
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  height: 24.w,
+                  width: 24.w,
+                  child: Checkbox(
+                    value: _isReturnHomemade,
+                    activeColor: defoultColor,
+                    onChanged: (val) {
+                      setState(() {
+                        _isReturnHomemade = val ?? false;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(width: 8.w),
+                Text(
+                  'Homemade',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontFamily: FontFamily.openSans,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(width: 20.w),
+            Row(
+              children: [
+                SizedBox(
+                  height: 24.w,
+                  width: 24.w,
+                  child: Checkbox(
+                    value: _isReturnStoreBought,
+                    activeColor: defoultColor,
+                    onChanged: (val) {
+                      setState(() {
+                        _isReturnStoreBought = val ?? false;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(width: 8.w),
+                Text(
+                  'Store bought',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontFamily: FontFamily.openSans,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(height: 20.h),
+      ],
+    );
+  }
+
+  Widget _buildReturnConditionChip(String label) {
+    bool isSelected = _returnSelectedCondition == label;
+    return GestureDetector(
+      onTap: () => setState(() => _returnSelectedCondition = label),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+        decoration: BoxDecoration(
+          color: isSelected ? defoultColor : Colors.white,
+          borderRadius: BorderRadius.circular(25.r),
+          border: Border.all(
+              color: isSelected ? defoultColor : Colors.grey.shade200),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                      color: defoultColor.withOpacity(0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4))
+                ]
+              : null,
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.grey,
+            fontWeight: FontWeight.bold,
+            fontSize: 13.sp,
+          ),
+        ),
+      ),
     );
   }
 
@@ -302,11 +580,18 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: EdgeInsets.all(16.w),
+          padding: EdgeInsets.all(12.w),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(12.r),
-            border: Border.all(color: Colors.grey.shade100),
+            // borderRadius: BorderRadius.circular(12.r),
+            // border: Border.all(color: Colors.grey.shade100),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade100,
+                blurRadius: 10,
+                offset: Offset(0, 2),
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -338,7 +623,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
                         SizedBox(height: 4.h),
                         Text(
                           'Only Partners you\'ve traded with before will receive notifications.',
-                          style: TextStyle(color: Colors.grey, fontSize: 10.sp),
+                          style: TextStyle(color: greyColor, fontSize: 12.sp),
                         ),
                       ],
                     ),
@@ -346,6 +631,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
                   Switch(
                     value: _notifyPartnersOnly,
                     activeColor: defoultColor,
+                    padding: EdgeInsets.all(8.w),
                     onChanged: (val) =>
                         setState(() => _notifyPartnersOnly = val),
                   ),
@@ -503,6 +789,8 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
   }
 
   Widget _buildAppBar() {
+    // take teh argument data
+    final String title = ModalRoute.of(context)!.settings.arguments as String;
     return Container(
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(top: 20.h),
@@ -516,7 +804,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
           SizedBox(width: 45.w),
           Center(
             child: Text(
-              'Create Give Post',
+              title, //'Create Give Post',
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,

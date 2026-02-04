@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tool_bocs/features/profile/view/user_profile_screen.dart';
+import 'package:tool_bocs/routes/app_routes.dart';
 import 'package:tool_bocs/util/colors.dart';
 import 'package:tool_bocs/util/font_family.dart';
 
@@ -14,14 +15,9 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  bool isPriceSelected = true;
-  double _lowerValue = 10;
-  double _upperValue = 100;
-  bool isNegotiable = false;
   int _currentImageIndex = 0;
   final PageController _pageController = PageController();
   Timer? _autoPlayTimer;
-
   late final List<String> _imageList;
 
   @override
@@ -39,7 +35,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   void _startAutoPlay() {
     _autoPlayTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (_imageList.length > 1) {
+      if (_imageList.length > 1 && _pageController.hasClients) {
         int nextIndex = (_currentImageIndex + 1) % _imageList.length;
         _pageController.animateToPage(
           nextIndex,
@@ -60,78 +56,157 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FB),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildAppBar(context),
-              Divider(
-                color: greyColor.withOpacity(0.5),
-                height: 0.h,
-                thickness: 1,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back_ios_new, color: blackColor, size: 20.sp),
+        ),
+        centerTitle: true,
+        title: Text(
+          'IPhone 12 (128GB)',
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
+            fontFamily: FontFamily.openSans,
+            color: blackColor,
+          ),
+        ),
+        actions: [
+          //report and block
+          PopupMenuButton<String>(
+            padding: EdgeInsets.zero,
+            onSelected: (value) {
+              // Handle selection
+            },
+            offset: const Offset(0, 55),
+            shape: PopupMenuArrowShape(
+              borderRadius: 10.r,
+            ),
+            color: whiteColor,
+            elevation: 4,
+            itemBuilder: (context) => [
+              PopupMenuItem<String>(
+                // padding: EdgeInsets.zero,
+                value: 'block',
+                height: 40.h,
+                child: Center(
+                  child: Text(
+                    'Block',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: blackColor,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: FontFamily.openSans,
+                    ),
+                  ),
+                ),
               ),
-              SizedBox(height: 20.h),
-              _buildImageCarousel(),
-              Padding(
-                padding: EdgeInsets.all(20.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'IPhone 12 (128GB)',
-                      style: TextStyle(
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: FontFamily.openSans,
-                        color: blackColor,
-                      ),
+              PopupMenuDivider(height: 1),
+              PopupMenuItem<String>(
+                value: 'report',
+                height: 40.h,
+                child: Center(
+                  child: Text(
+                    'Report',
+                    style: TextStyle(
+                      color: blackColor,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: FontFamily.openSans,
                     ),
-                    SizedBox(height: 8.h),
-                    _buildCategoryTag('Electronics'),
-                    SizedBox(height: 20.h),
-                    _buildOwnerProfile(),
-                    SizedBox(height: 20.h),
-                    Text(
-                      'Description',
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: FontFamily.openSans,
-                        color: blackColor,
-                      ),
-                    ),
-                    SizedBox(height: 12.h),
-                    Text(
-                      'This iPhone 12 is in excellent condition, barely used, with no scratches or dents. It comes with 128GB storage, perfect for all your apps and media. Battery health is at 95%. Includes original box and charging cable. Selling because I upgraded to a newer model. Ready for a new home!',
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: greyColor,
-                        height: 1.5,
-                        fontFamily: FontFamily.openSans,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(height: 20.h),
-                    _buildReturnSection(),
-                    SizedBox(height: 20.h),
-                  ],
+                  ),
                 ),
               ),
             ],
+            child: Padding(
+              padding: EdgeInsets.only(right: 15.w),
+              child: Icon(
+                Icons.more_vert,
+                color: blackColor,
+                size: 28.sp,
+              ),
+            ),
           ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(10),
+          child: Divider(height: 1, color: Colors.grey.shade100),
         ),
       ),
-    );
-  }
-
-  Widget _buildAppBar(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 30.h),
-      child: IconButton(
-        onPressed: () => Navigator.pop(context),
-        icon: const Icon(Icons.arrow_back_ios_new),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 20.h),
+            _buildOwnerProfile(),
+            SizedBox(height: 20.h),
+            _buildImageCarousel(),
+            Padding(
+              padding: EdgeInsets.all(20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildCategoryTag('Electronics'),
+                  SizedBox(height: 15.h),
+                  Text(
+                    'Description',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: FontFamily.openSans,
+                      color: blackColor,
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+                  Text(
+                    'This iPhone 12 is in excellent condition, barely used, with no scratches or dents. It comes with 128GB storage, perfect for all your apps and media. Battery health is at 95%. Includes original box and charging cable. Selling because I upgraded to a newer model. Ready for a new home!',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: greyColor,
+                      height: 1.6,
+                      fontFamily: FontFamily.openSans,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 30.h),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(top: BorderSide(color: Colors.grey.shade100)),
+        ),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, AppRoutes.tradeStep1);
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: appColor,
+            minimumSize: Size(double.infinity, 50.h),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+            elevation: 0,
+          ),
+          child: Text(
+            'Take It',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w700,
+              fontFamily: FontFamily.openSans,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -140,8 +215,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Column(
       children: [
         Container(
-          height: 250.h,
-          margin: EdgeInsets.symmetric(horizontal: 25.w),
+          height: 320.h,
+          width: double.infinity,
+          margin: EdgeInsets.symmetric(horizontal: 20.w),
           child: Stack(
             children: [
               PageView.builder(
@@ -153,38 +229,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 },
                 itemCount: _imageList.length,
                 itemBuilder: (context, index) {
-                  return AnimatedBuilder(
-                    animation: _pageController,
-                    builder: (context, child) {
-                      double value = 1.0;
-                      if (_pageController.position.haveDimensions) {
-                        value = _pageController.page! - index;
-                        value = (1 - (value.abs() * 0.1)).clamp(0.0, 1.0);
-                      } else {
-                        // Handle initial state before dimensions are available
-                        if (index == _currentImageIndex) {
-                          value = 1.0;
-                        } else {
-                          value = 0.9;
-                        }
-                      }
-
-                      return Transform.scale(
-                        scale: value,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25.r),
-                            image: DecorationImage(
-                              image: _imageList[index].startsWith('assets/')
-                                  ? AssetImage(_imageList[index])
-                                  : NetworkImage(_imageList[index])
-                                      as ImageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(20.r),
+                    child: Image.asset(
+                      _imageList[index],
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
                   );
                 },
               ),
@@ -198,14 +249,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     children: List.generate(_imageList.length, (index) {
                       return AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
-                        width: _currentImageIndex == index ? 20.w : 8.w,
-                        height: 8.h,
+                        width: _currentImageIndex == index ? 8.w : 6.w,
+                        height: _currentImageIndex == index ? 8.w : 6.w,
                         margin: EdgeInsets.symmetric(horizontal: 4.w),
                         decoration: BoxDecoration(
                           color: _currentImageIndex == index
-                              ? defoultColor
+                              ? Colors.white
                               : Colors.white.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(4.r),
+                          shape: BoxShape.circle,
                         ),
                       );
                     }),
@@ -220,15 +271,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   Widget _buildCategoryTag(String label) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: defoultColor,
-        borderRadius: BorderRadius.circular(20.r),
+        color: appColor,
+        borderRadius: BorderRadius.circular(30.r),
       ),
       child: Text(
         label,
         style: TextStyle(
-          color: whiteColor,
+          color: Colors.white,
           fontSize: 12.sp,
           fontWeight: FontWeight.w700,
           fontFamily: FontFamily.openSans,
@@ -238,235 +289,110 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Widget _buildOwnerProfile() {
-    return Container(
-      padding: EdgeInsets.all(12.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.grey.withOpacity(0.2)),
-        borderRadius: BorderRadius.circular(15.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.02),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserProfileScreen(),
           ),
-        ],
-      ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 30.r,
-            backgroundImage: const AssetImage('assets/profile2.png'),
-          ),
-          SizedBox(width: 15.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Riya',
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: FontFamily.openSans,
-                        color: blackColor,
-                      ),
-                    ),
-                    SizedBox(width: 10.w),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15.w, vertical: 2.h),
-                      decoration: BoxDecoration(
-                        color: defoultColor.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      child: Text(
-                        'Giving',
-                        style: TextStyle(
-                          color: defoultColor,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 4.h),
-                Row(
-                  children: [
-                    const Icon(Icons.star, color: Colors.amber, size: 16),
-                    SizedBox(width: 2.w),
-                    Text(
-                      '4.8',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: FontFamily.openSans,
-                        color: blackColor,
-                      ),
-                    ),
-                    SizedBox(width: 4.w),
-                    Text(
-                      ' (Person rating)',
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: FontFamily.openSans,
-                        color: greyColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 20.w),
+        padding: EdgeInsets.all(12.w),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16.r),
+          border: Border.all(color: Colors.grey.shade100),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildReturnSection() {
-    return Container(
-      padding: EdgeInsets.all(20.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.grey.withOpacity(0.2)),
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            'What do you want in return ?',
-            style: TextStyle(
-              fontSize: 17.sp,
-              fontWeight: FontWeight.w700,
-              fontFamily: FontFamily.openSans,
-              color: blackColor,
-            ),
-          ),
-          SizedBox(height: 20.h),
-          Container(
-            height: 45.h,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF0F2F5),
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => setState(() => isPriceSelected = true),
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color:
-                            isPriceSelected ? defoultColor : Colors.transparent,
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      child: Text(
-                        'Price',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: isPriceSelected ? Colors.white : blackColor,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: FontFamily.openSans,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => setState(() => isPriceSelected = false),
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: !isPriceSelected
-                            ? defoultColor
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      child: Text(
-                        'Item',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: !isPriceSelected ? Colors.white : blackColor,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: FontFamily.openSans,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (isPriceSelected) ...[
-            SizedBox(height: 24.h),
-            _buildPriceRangeSection(),
           ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPriceRangeSection() {
-    return Container(
-      padding: EdgeInsets.all(15.w),
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xFFF0F2F5)),
-        borderRadius: BorderRadius.circular(15.r),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Desired Price Range : \$${_lowerValue.toInt()} - \$${_upperValue.toInt()}',
-            style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w700,
-              fontFamily: FontFamily.openSans,
-              color: blackColor,
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(30.r),
+              child: Image.asset(
+                'assets/profile2.png',
+                width: 56.r,
+                height: 56.r,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          RangeSlider(
-            padding: EdgeInsets.symmetric(vertical: 15.h),
-            values: RangeValues(_lowerValue, _upperValue),
-            min: 0,
-            max: 500,
-            activeColor: defoultColor,
-            inactiveColor: greyColor.withOpacity(0.3),
-            onChanged: (RangeValues values) {
-              setState(() {
-                _lowerValue = values.start;
-                _upperValue = values.end;
-              });
-            },
-          ),
-          Row(
-            children: [
-              Transform.scale(
-                scale: 0.8,
-                child: Switch(
-                  value: isNegotiable,
-                  activeColor: defoultColor,
-                  onChanged: (value) => setState(() => isNegotiable = value),
-                ),
+            SizedBox(width: 15.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Riya',
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: FontFamily.openSans,
+                          color: blackColor,
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                          vertical: 4.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE8E1FF),
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                        child: Text(
+                          'Giving',
+                          style: TextStyle(
+                            color: const Color(0xFF6B4EE0),
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: FontFamily.openSans,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
+                  Row(
+                    children: [
+                      Icon(Icons.star, color: Colors.amber, size: 16.sp),
+                      SizedBox(width: 4.w),
+                      Text(
+                        '4.8',
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: FontFamily.openSans,
+                          color: blackColor,
+                        ),
+                      ),
+                      SizedBox(width: 4.w),
+                      Text(
+                        '(Person rating)',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: FontFamily.openSans,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Text(
-                'Negotiable',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: greyColor,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
