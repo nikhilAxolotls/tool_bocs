@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final shimmer = context.watch<ShimmerController>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FB),
+      backgroundColor: context.scaffoldBg,
       body: shimmer.isLoading
           ? _buildShimmer(context)
           : SingleChildScrollView(
@@ -111,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: double.infinity,
                   padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.surfaceColor,
                     borderRadius: BorderRadius.circular(15.r),
                   ),
                   child: Column(
@@ -133,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: double.infinity,
                   padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.surfaceColor,
                     borderRadius: BorderRadius.circular(15.r),
                   ),
                   child: Column(
@@ -171,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: double.infinity,
                   padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.surfaceColor,
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Column(
@@ -212,7 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: double.infinity,
                   padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.surfaceColor,
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Column(
@@ -331,8 +331,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     right: 6.w,
                     child: Container(
                       padding: EdgeInsets.all(4.w),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: context.surfaceColor,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(Icons.camera_alt,
@@ -415,9 +415,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(15.r),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -428,7 +428,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               fontSize: 18.sp,
               fontWeight: FontWeight.w700,
               fontFamily: FontFamily.openSans,
-              color: blackColor,
+              color: context.textColor,
             ),
           ),
           SizedBox(height: 4.h),
@@ -453,9 +453,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(15.r),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Column(
         children: [
@@ -475,8 +475,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(width: 4.w),
                   Text(
                     '4.8 (12 Reviews)',
-                    style:
-                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.bold,
+                        color: context.textColor),
                   ),
                 ],
               ),
@@ -523,8 +525,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Text(
                   'Rajesh Kumar',
-                  style:
-                      TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: context.textColor),
                 ),
                 Row(
                   children: List.generate(
@@ -560,9 +564,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Column(
         children: [
@@ -574,7 +578,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w700,
                 fontFamily: FontFamily.openSans,
-                color: blackColor,
+                color: context.textColor,
               ),
             ),
           ),
@@ -668,8 +672,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 10.w),
       decoration: BoxDecoration(
-        color: greyColor.withOpacity(0.1),
-        border: Border.all(color: greyColor.withOpacity(0.2)),
+        color: context.isDarkMode ? Colors.white10 : greyColor.withOpacity(0.1),
+        border: Border.all(color: context.dividerColor),
         borderRadius: BorderRadius.circular(10.r),
       ),
       child: Column(
@@ -688,7 +692,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             label,
             style: TextStyle(
               fontSize: 10.sp,
-              color: blackColor,
+              color: context.textColor,
               fontWeight: FontWeight.w500,
               fontFamily: FontFamily.openSans,
             ),
@@ -703,15 +707,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: context.dividerColor),
+        boxShadow: context.isDarkMode
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.03),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
       ),
       child: Column(
         children: [
@@ -719,7 +726,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             context,
             icon: Icons.wb_sunny_outlined,
             label: 'Themes',
-            onTap: () {},
+            onTap: () => Navigator.pushNamed(context, AppRoutes.themeChange),
           ),
           _buildDivider(),
           _buildProfileSettingItem(
@@ -783,7 +790,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         style: TextStyle(
           fontSize: 15.sp,
           fontWeight: FontWeight.w600,
-          color: blackColor,
+          color: context.textColor,
           fontFamily: FontFamily.openSans,
         ),
       ),
@@ -799,7 +806,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Divider(
       height: 1,
       thickness: 1,
-      color: Colors.grey.shade100,
+      color: context.dividerColor,
     );
   }
 }

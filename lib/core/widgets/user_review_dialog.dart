@@ -36,7 +36,7 @@ class _UserReviewDialogState extends State<UserReviewDialog> {
       ),
       insetPadding: EdgeInsets.symmetric(horizontal: 24.w),
       elevation: 0,
-      backgroundColor: Colors.white,
+      backgroundColor: context.surfaceColor,
       child: Padding(
         padding: EdgeInsets.all(20.w),
         child: SingleChildScrollView(
@@ -47,7 +47,8 @@ class _UserReviewDialogState extends State<UserReviewDialog> {
                 alignment: Alignment.topRight,
                 child: IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: Icon(Icons.close, size: 24.sp),
+                  icon:
+                      Icon(Icons.close, size: 24.sp, color: context.textColor),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
                 ),
@@ -59,7 +60,7 @@ class _UserReviewDialogState extends State<UserReviewDialog> {
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
-                  color: blackColor,
+                  color: context.textColor,
                   fontFamily: FontFamily.openSans,
                 ),
               ),
@@ -69,7 +70,7 @@ class _UserReviewDialogState extends State<UserReviewDialog> {
                 padding: EdgeInsets.all(16.w),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.r),
-                  border: Border.all(color: Colors.grey.shade100),
+                  border: Border.all(color: context.dividerColor),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +80,7 @@ class _UserReviewDialogState extends State<UserReviewDialog> {
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w700,
-                        color: blackColor,
+                        color: context.textColor,
                         fontFamily: FontFamily.openSans,
                       ),
                     ),
@@ -107,7 +108,7 @@ class _UserReviewDialogState extends State<UserReviewDialog> {
                               border: Border.all(
                                 color: isSelected
                                     ? themeColor
-                                    : Colors.grey.shade100,
+                                    : context.dividerColor,
                               ),
                             ),
                             child: Row(
@@ -123,7 +124,9 @@ class _UserReviewDialogState extends State<UserReviewDialog> {
                                     fontWeight: isSelected
                                         ? FontWeight.w600
                                         : FontWeight.w400,
-                                    color: isSelected ? themeColor : blackColor,
+                                    color: isSelected
+                                        ? themeColor
+                                        : context.textColor,
                                     fontFamily: FontFamily.openSans,
                                   ),
                                 ),
@@ -144,7 +147,7 @@ class _UserReviewDialogState extends State<UserReviewDialog> {
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
-                    color: blackColor,
+                    color: context.textColor,
                     fontFamily: FontFamily.openSans,
                   ),
                 ),
@@ -158,18 +161,18 @@ class _UserReviewDialogState extends State<UserReviewDialog> {
                   hintText: 'Share details about your\nexperience',
                   hintStyle: TextStyle(
                     fontSize: 14.sp,
-                    color: Colors.grey,
+                    color: context.subTextColor,
                     fontFamily: FontFamily.openSans,
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: context.isDarkMode ? Colors.white10 : Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16.r),
-                    borderSide: BorderSide(color: Colors.grey.shade100),
+                    borderSide: BorderSide(color: context.dividerColor),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16.r),
-                    borderSide: BorderSide(color: Colors.grey.shade100),
+                    borderSide: BorderSide(color: context.dividerColor),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16.r),

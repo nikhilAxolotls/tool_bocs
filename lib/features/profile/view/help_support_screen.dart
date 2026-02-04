@@ -22,18 +22,19 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bg1Color,
+      backgroundColor: context.scaffoldBg,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: context.scaffoldBg,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: blackColor, size: 20.sp),
+          icon:
+              Icon(Icons.arrow_back_ios, color: context.textColor, size: 20.sp),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Help & Support',
           style: TextStyle(
-            color: blackColor,
+            color: context.textColor,
             fontSize: 18.sp,
             fontWeight: FontWeight.w700,
             fontFamily: FontFamily.openSans,
@@ -42,7 +43,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(10),
-          child: Divider(height: 1, color: Colors.grey.shade100),
+          child: Divider(height: 1, color: context.dividerColor),
         ),
       ),
       body: SingleChildScrollView(
@@ -97,15 +98,18 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: context.dividerColor),
+        boxShadow: context.isDarkMode
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.03),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
       ),
       child: Theme(
         data: Theme.of(context).copyWith(
@@ -126,7 +130,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
             style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w600,
-              color: const Color(0xFF2D3748),
+              color: context.textColor,
               fontFamily: FontFamily.openSans,
             ),
           ),
@@ -134,7 +138,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
             initiallyExpanded
                 ? Icons.keyboard_arrow_up
                 : Icons.keyboard_arrow_down,
-            color: Colors.black54,
+            color: context.textColor.withOpacity(0.5),
           ),
           childrenPadding: EdgeInsets.fromLTRB(50.w, 0, 20.w, 15.h),
           children: [
@@ -142,7 +146,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
               answer,
               style: TextStyle(
                 fontSize: 12.sp,
-                color: Colors.grey.shade600,
+                color: context.subTextColor,
                 height: 1.5,
                 fontFamily: FontFamily.openSans,
               ),
@@ -171,7 +175,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
             fontSize: 15.sp,
             fontWeight: FontWeight.w700,
             fontFamily: FontFamily.openSans,
-            color: blackColor,
+            color: context.textColor,
           ),
         ),
         SizedBox(height: 8.h),
@@ -216,16 +220,19 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
           maxLines: 5,
           decoration: InputDecoration(
             hintText: 'Share Your Feedback',
-            hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13.sp),
+            hintStyle: TextStyle(
+                color:
+                    context.isDarkMode ? Colors.white30 : Colors.grey.shade400,
+                fontSize: 13.sp),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: context.surfaceColor,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: greyColor.withOpacity(0.4)),
+              borderSide: BorderSide(color: context.dividerColor),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: greyColor.withOpacity(0.4)),
+              borderSide: BorderSide(color: context.dividerColor),
             ),
           ),
         ),

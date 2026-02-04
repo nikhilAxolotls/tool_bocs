@@ -23,7 +23,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     final shimmer = context.watch<ShimmerController>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FB),
+      backgroundColor: context.scaffoldBg,
       body: shimmer.isLoading
           ? _buildShimmer(context)
           : SingleChildScrollView(
@@ -111,7 +111,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   width: double.infinity,
                   padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.surfaceColor,
                     borderRadius: BorderRadius.circular(15.r),
                   ),
                   child: Column(
@@ -133,7 +133,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   width: double.infinity,
                   padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.surfaceColor,
                     borderRadius: BorderRadius.circular(15.r),
                   ),
                   child: Column(
@@ -171,7 +171,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   width: double.infinity,
                   padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.surfaceColor,
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Column(
@@ -208,7 +208,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   width: double.infinity,
                   padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.surfaceColor,
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Column(
@@ -230,8 +230,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 if (index < 4) ...[
                                   SizedBox(height: 12.h),
                                   Divider(
-                                      height: 1,
-                                      color: Colors.grey.withOpacity(0.1)),
+                                      height: 1, color: context.dividerColor),
                                   SizedBox(height: 12.h),
                                 ],
                               ],
@@ -273,7 +272,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               Text(
                 'Profile',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: whiteColor,
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w700,
                   fontFamily: FontFamily.openSans,
@@ -289,7 +288,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 shape: PopupMenuArrowShape(
                   borderRadius: 10.r,
                 ),
-                color: whiteColor,
+                color: context.surfaceColor,
                 elevation: 4,
                 itemBuilder: (context) => [
                   PopupMenuItem<String>(
@@ -301,7 +300,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         'Block',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: blackColor,
+                          color: context.textColor,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
                           fontFamily: FontFamily.openSans,
@@ -317,7 +316,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       child: Text(
                         'Report',
                         style: TextStyle(
-                          color: blackColor,
+                          color: context.textColor,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
                           fontFamily: FontFamily.openSans,
@@ -330,7 +329,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   padding: EdgeInsets.all(8.r),
                   child: Icon(
                     Icons.more_vert,
-                    color: Colors.white,
+                    color: whiteColor,
                     size: 28.sp,
                   ),
                 ),
@@ -349,7 +348,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               Text(
                 'Riya',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: whiteColor,
                   fontSize: 22.sp,
                   fontWeight: FontWeight.w700,
                   fontFamily: FontFamily.openSans,
@@ -376,9 +375,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(15.r),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: context.dividerColor, width: 1.w),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -389,7 +388,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               fontSize: 18.sp,
               fontWeight: FontWeight.w700,
               fontFamily: FontFamily.openSans,
-              color: blackColor,
+              color: context.textColor,
             ),
           ),
           SizedBox(height: 4.h),
@@ -397,7 +396,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             'Entrepreneur | Passionate about sustainable living | Love connecting with people for meaningful exchanges. Always looking for unique items to give and take.',
             textAlign: TextAlign.justify,
             style: TextStyle(
-              color: greyColor,
+              color: context.subTextColor,
               fontSize: 12.sp,
               height: 1.3,
               fontFamily: FontFamily.openSans,
@@ -414,9 +413,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(15.r),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: context.dividerColor, width: 1.w),
       ),
       child: Column(
         children: [
@@ -428,6 +427,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
+                  color: context.textColor,
                 ),
               ),
               Row(
@@ -436,8 +436,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   SizedBox(width: 4.w),
                   Text(
                     '4.8 (12 Reviews)',
-                    style:
-                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.bold,
+                        color: context.textColor),
                   ),
                 ],
               ),
@@ -445,9 +447,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           ),
           SizedBox(height: 20.h),
           _buildReviewItem(),
-          const Divider(),
+          Divider(color: context.dividerColor),
           _buildReviewItem(),
-          const Divider(),
+          Divider(color: context.dividerColor),
           _buildReviewItem(),
           SizedBox(height: 5.h),
           TextButton(
@@ -484,8 +486,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               children: [
                 Text(
                   'Rajesh Kumar',
-                  style:
-                      TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: context.textColor),
                 ),
                 Row(
                   children: List.generate(
@@ -496,16 +500,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 SizedBox(height: 4.h),
                 Text(
                   'Excellent service! The item was exactly as described and the handover was smooth.',
-                  style: TextStyle(fontSize: 12.sp, color: greyColor),
+                  style:
+                      TextStyle(fontSize: 12.sp, color: context.subTextColor),
                 ),
                 SizedBox(height: 4.h),
                 Row(
                   children: [
                     Icon(Icons.thumb_up_outlined,
-                        size: 14.sp, color: greyColor),
+                        size: 14.sp, color: context.subTextColor),
                     SizedBox(width: 12.w),
                     Icon(Icons.thumb_down_outlined,
-                        size: 14.sp, color: greyColor),
+                        size: 14.sp, color: context.subTextColor),
                   ],
                 ),
               ],
@@ -521,9 +526,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Column(
         children: [
@@ -535,7 +540,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w700,
                 fontFamily: FontFamily.openSans,
-                color: blackColor,
+                color: context.textColor,
               ),
             ),
           ),
@@ -569,8 +574,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 10.w),
       decoration: BoxDecoration(
-        color: greyColor.withOpacity(0.1),
-        border: Border.all(color: greyColor.withOpacity(0.2)),
+        color: context.isDarkMode ? Colors.white10 : greyColor.withOpacity(0.1),
+        border: Border.all(color: context.dividerColor),
         borderRadius: BorderRadius.circular(10.r),
       ),
       child: Column(
@@ -589,7 +594,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             label,
             style: TextStyle(
               fontSize: 10.sp,
-              color: blackColor,
+              color: context.textColor,
               fontWeight: FontWeight.w500,
               fontFamily: FontFamily.openSans,
             ),
@@ -647,9 +652,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       alignment: Alignment.centerLeft,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -675,20 +680,20 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget _buildSettingsItem(BuildContext context, IconData icon, String label,
       {bool isLogout = false}) {
     return ListTile(
-      leading: Icon(icon, color: isLogout ? Colors.red : Colors.black87),
+      leading: Icon(icon, color: isLogout ? Colors.red : context.textColor),
       title: Text(label,
           style: TextStyle(
             fontSize: 16.sp,
             fontWeight: FontWeight.w600,
             fontFamily: FontFamily.openSans,
-            color: isLogout ? Colors.red : blackColor,
+            color: isLogout ? Colors.red : context.textColor,
           )),
       trailing: isLogout
           ? null
           : Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: blackColor,
+              color: context.textColor,
             ),
       onTap: () {
         if (isLogout) {
@@ -719,7 +724,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           borderRadius: BorderRadius.circular(8.r),
           boxShadow: [
             BoxShadow(
-              color: blackColor.withOpacity(0.05),
+              color: context.dividerColor.withOpacity(0.2),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),

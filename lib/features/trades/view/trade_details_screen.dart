@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tool_bocs/features/profile/view/user_profile_screen.dart';
+import 'package:tool_bocs/routes/app_routes.dart';
 import 'package:tool_bocs/util/colors.dart';
 import 'package:tool_bocs/util/font_family.dart';
 
@@ -14,7 +16,7 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bg1Color,
+      backgroundColor: context.scaffoldBg,
       appBar: _buildAppBar(context),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -51,17 +53,17 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       elevation: 0,
       leading: IconButton(
         onPressed: () => Navigator.pop(context),
-        icon: Icon(Icons.arrow_back_ios, color: blackColor, size: 20.sp),
+        icon: Icon(Icons.arrow_back_ios, color: context.textColor, size: 20.sp),
       ),
       centerTitle: true,
       title: Text(
         'Trade Details',
         style: TextStyle(
-          color: blackColor,
+          color: context.textColor,
           fontSize: 18.sp,
           fontWeight: FontWeight.w700,
           fontFamily: FontFamily.openSans,
@@ -71,13 +73,13 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
         preferredSize: Size.fromHeight(10.h),
         child: Divider(
           height: 1.h,
-          color: greyColor.withOpacity(0.1),
+          color: context.dividerColor,
           thickness: 1.h,
         ),
       ),
     );
   }
-           
+
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
@@ -85,7 +87,7 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
         fontSize: 16.sp,
         fontWeight: FontWeight.w700,
         fontFamily: FontFamily.openSans,
-        color: blackColor,
+        color: context.textColor,
       ),
     );
   }
@@ -94,9 +96,9 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: Colors.grey.shade100),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Row(
         children: [
@@ -122,16 +124,24 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w700,
                     fontFamily: FontFamily.openSans,
-                    color: blackColor,
+                    color: context.textColor,
                   ),
                 ),
                 SizedBox(height: 8.h),
                 Row(
                   children: [
-                    _buildBadge('Give', const Color(0xFFE8F1FF),
+                    _buildBadge(
+                        'Give',
+                        context.isDarkMode
+                            ? Colors.blue.withOpacity(0.15)
+                            : const Color(0xFFE8F1FF),
                         const Color(0xFF2F80ED)),
                     SizedBox(width: 8.w),
-                    _buildBadge('Completed', const Color(0xFFE8F9EE),
+                    _buildBadge(
+                        'Completed',
+                        context.isDarkMode
+                            ? Colors.green.withOpacity(0.15)
+                            : const Color(0xFFE8F9EE),
                         const Color(0xFF27AE60)),
                   ],
                 ),
@@ -165,9 +175,9 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: Colors.grey.shade100),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Row(
         children: [
@@ -187,7 +197,7 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
                     fontFamily: FontFamily.openSans,
-                    color: blackColor,
+                    color: context.textColor,
                   ),
                 ),
                 Text(
@@ -195,7 +205,7 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
                   style: TextStyle(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w400,
-                    color: greyColor,
+                    color: context.subTextColor,
                   ),
                 ),
                 Row(
@@ -212,7 +222,7 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
                       style: TextStyle(
                         fontSize: 13.sp,
                         fontWeight: FontWeight.w600,
-                        color: blackColor,
+                        color: context.textColor,
                       ),
                     ),
                   ],
@@ -221,7 +231,14 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserProfileScreen(),
+                ),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: defoultColor,
               elevation: 0,
@@ -246,9 +263,9 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: Colors.grey.shade100),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Row(
         children: [
@@ -257,9 +274,10 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
             height: 60.w,
             padding: EdgeInsets.all(8.w),
             decoration: BoxDecoration(
-              color: const Color(0xFFF9FAFB),
+              color:
+                  context.isDarkMode ? Colors.white10 : const Color(0xFFF9FAFB),
               borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: Colors.grey.shade100),
+              border: Border.all(color: context.dividerColor),
             ),
             child: Image.asset('assets/iphone.png'),
           ),
@@ -273,7 +291,7 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
                   style: TextStyle(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w400,
-                    color: greyColor,
+                    color: context.subTextColor,
                   ),
                 ),
                 Text(
@@ -282,7 +300,7 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
                     fontFamily: FontFamily.openSans,
-                    color: blackColor,
+                    color: context.textColor,
                   ),
                 ),
               ],
@@ -297,9 +315,9 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: Colors.grey.shade100),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Column(
         children: [
@@ -318,14 +336,14 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
   Widget _buildInfoRow(IconData icon, String text) {
     return Row(
       children: [
-        Icon(icon, color: greyColor, size: 20.sp),
+        Icon(icon, color: context.subTextColor, size: 20.sp),
         SizedBox(width: 12.w),
         Text(
           text,
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,
-            color: const Color(0xFF475467),
+            color: context.subTextColor,
           ),
         ),
       ],
@@ -336,14 +354,15 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: Colors.grey.shade100),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.description_outlined, color: greyColor, size: 24.sp),
+          Icon(Icons.description_outlined,
+              color: context.subTextColor, size: 24.sp),
           SizedBox(width: 12.w),
           Expanded(
             child: Text(
@@ -352,7 +371,7 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
                 fontSize: 14.sp,
                 height: 1.5,
                 fontWeight: FontWeight.w500,
-                color: const Color(0xFF475467),
+                color: context.subTextColor,
               ),
             ),
           ),
@@ -366,9 +385,9 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
       width: double.infinity,
       padding: EdgeInsets.symmetric(vertical: 20.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: Colors.grey.shade100),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Column(
         children: [
@@ -378,7 +397,7 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
               fontSize: 16.sp,
               fontWeight: FontWeight.w700,
               fontFamily: FontFamily.openSans,
-              color: blackColor,
+              color: context.textColor,
             ),
           ),
           SizedBox(height: 12.h),
@@ -386,8 +405,8 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
                 5,
-                (index) => Icon(Icons.star,
-                    color: const Color(0xFFE4E7EB), size: 32.sp)),
+                (index) =>
+                    Icon(Icons.star, color: context.dividerColor, size: 32.sp)),
           ),
         ],
       ),
@@ -401,7 +420,7 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
       child: OutlinedButton(
         onPressed: () {},
         style: OutlinedButton.styleFrom(
-          side: BorderSide(color: Colors.grey.shade200),
+          side: BorderSide(color: context.dividerColor),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
         ),
@@ -410,7 +429,7 @@ class _TradeDetailsScreenState extends State<TradeDetailsScreen> {
           style: TextStyle(
             fontSize: 16.sp,
             fontWeight: FontWeight.w700,
-            color: greyColor,
+            color: context.subTextColor,
           ),
         ),
       ),

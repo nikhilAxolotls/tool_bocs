@@ -58,7 +58,7 @@ class _NoInternetScreenState extends State<NoInternetScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       body: FadeTransition(
         opacity: _fadeAnimation,
         child: SafeArea(
@@ -73,13 +73,18 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                      color: yelloColor.withOpacity(0.1),
+                      color: context.isDarkMode
+                          ? Colors.white10
+                          : context.surfaceColor,
                       shape: BoxShape.circle,
+                      border: Border.all(
+                        color: appColor,
+                      ),
                     ),
                     child: Icon(
                       Icons.wifi_off_rounded,
                       size: 60,
-                      color: yelloColor,
+                      color: appColor,
                     ),
                   ),
 
@@ -92,7 +97,7 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                     style: TextStyle(
                       fontFamily: 'Gilroy Bold',
                       fontSize: 24,
-                      color: blackColor,
+                      color: context.textColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -106,7 +111,7 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                     style: TextStyle(
                       fontFamily: 'Gilroy Medium',
                       fontSize: 16,
-                      color: greyColor,
+                      color: context.subTextColor,
                       height: 1.5,
                     ),
                   ),
@@ -127,7 +132,7 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: yelloColor,
+                      backgroundColor: appColor,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 48,
@@ -155,7 +160,7 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                         height: 16,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(yelloColor),
+                          valueColor: AlwaysStoppedAnimation<Color>(appColor),
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -164,7 +169,7 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                         style: TextStyle(
                           fontFamily: 'Gilroy Regular',
                           fontSize: 14,
-                          color: greyColor,
+                          color: context.subTextColor,
                         ),
                       ),
                     ],

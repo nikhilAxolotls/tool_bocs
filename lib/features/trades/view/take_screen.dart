@@ -18,7 +18,7 @@ class TakeScreen extends StatelessWidget {
     final shimmer = context.watch<ShimmerController>();
 
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: context.scaffoldBg,
       body: shimmer.isLoading
           ? _buildShimmer(context)
           : Stack(
@@ -27,7 +27,7 @@ class TakeScreen extends StatelessWidget {
                   children: [
                     _buildHeader(context),
                     Divider(
-                      color: greyColor.withOpacity(0.5),
+                      color: context.dividerColor,
                       height: 0.h,
                       thickness: 0.5,
                     ),
@@ -115,10 +115,10 @@ class TakeScreen extends StatelessWidget {
                         topLeft: Radius.circular(30.r),
                         topRight: Radius.circular(30.r),
                       ),
-                      color: whiteColor,
+                      color: context.surfaceColor,
                       boxShadow: [
                         BoxShadow(
-                          color: blackColor.withOpacity(0.12),
+                          color: context.dividerColor.withOpacity(0.5),
                           offset: const Offset(0, -2),
                           blurRadius: 4,
                         ),
@@ -199,7 +199,7 @@ class TakeScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 16.sp,
               fontWeight: FontWeight.w700,
-              color: blackColor,
+              color: context.textColor,
             ),
           ),
           const Spacer(),
@@ -208,7 +208,7 @@ class TakeScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w600,
-              color: greyColor,
+              color: context.subTextColor,
             ),
           ),
         ],
@@ -219,7 +219,7 @@ class TakeScreen extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(20.w, 60.h, 20.w, 15.h),
-      color: Colors.white,
+      color: context.scaffoldBg,
       child: Column(
         children: [
           Row(
@@ -228,15 +228,18 @@ class TakeScreen extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF0F2F5),
+                    color: context.isDarkMode
+                        ? Colors.white10
+                        : const Color(0xFFF0F2F5),
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'Search any Product..',
-                      hintStyle: TextStyle(color: greyColor, fontSize: 14.sp),
-                      prefixIcon:
-                          Icon(Icons.search, color: greyColor, size: 20.sp),
+                      hintStyle: TextStyle(
+                          color: context.subTextColor, fontSize: 14.sp),
+                      prefixIcon: Icon(Icons.search,
+                          color: context.subTextColor, size: 20.sp),
                       border: InputBorder.none,
                       // contentPadding: EdgeInsets.symmetric(vertical: 10.h),
                     ),
@@ -309,9 +312,9 @@ class TakeScreen extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(10.w),
         decoration: BoxDecoration(
-          color: whiteColor,
+          color: context.surfaceColor,
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: Colors.grey.shade200),
+          border: Border.all(color: context.dividerColor),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.02),
@@ -349,7 +352,7 @@ class TakeScreen extends StatelessWidget {
                         "$owner's Taking",
                         style: TextStyle(
                           fontSize: 9.sp,
-                          color: greyColor,
+                          color: context.subTextColor,
                           fontWeight: FontWeight.w600,
                           fontFamily: FontFamily.openSans,
                         ),
@@ -363,7 +366,7 @@ class TakeScreen extends StatelessWidget {
                             distance,
                             style: TextStyle(
                               fontSize: 9.sp,
-                              color: greyColor,
+                              color: context.subTextColor,
                               fontWeight: FontWeight.w400,
                               fontFamily: FontFamily.openSans,
                             ),
@@ -379,6 +382,7 @@ class TakeScreen extends StatelessWidget {
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w700,
                       fontFamily: FontFamily.openSans,
+                      color: context.textColor,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -389,7 +393,7 @@ class TakeScreen extends StatelessWidget {
                       description,
                       style: TextStyle(
                         fontSize: 10.sp,
-                        color: greyColor,
+                        color: context.subTextColor,
                         fontWeight: FontWeight.w400,
                         fontFamily: FontFamily.openSans,
                       ),
@@ -409,7 +413,7 @@ class TakeScreen extends StatelessWidget {
                               text: "$owner ",
                               style: TextStyle(
                                 fontSize: 12.sp,
-                                color: blackColor,
+                                color: context.textColor,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: FontFamily.openSans,
                               ),
@@ -421,7 +425,7 @@ class TakeScreen extends StatelessWidget {
                               text: "\u2022 $category",
                               style: TextStyle(
                                 fontSize: 10.sp,
-                                color: blackColor,
+                                color: context.textColor,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: FontFamily.openSans,
                               ),
@@ -440,6 +444,7 @@ class TakeScreen extends StatelessWidget {
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w600,
                           fontFamily: FontFamily.openSans,
+                          color: context.textColor,
                         ),
                       ),
                       SizedBox(width: 4.w),
@@ -483,7 +488,7 @@ class TakeScreen extends StatelessWidget {
       children: [
         Container(
           padding: EdgeInsets.fromLTRB(20.w, 80.h, 20.w, 15.h),
-          color: Colors.white,
+          color: context.scaffoldBg,
           child: Row(
             children: [
               Expanded(child: ShimmerBox(height: 45.h, width: double.infinity)),
@@ -501,9 +506,9 @@ class TakeScreen extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(10.w),
                 decoration: BoxDecoration(
-                  color: whiteColor,
+                  color: context.surfaceColor,
                   borderRadius: BorderRadius.circular(12.r),
-                  border: Border.all(color: Colors.grey.shade200),
+                  border: Border.all(color: context.dividerColor),
                 ),
                 child: Row(
                   children: [

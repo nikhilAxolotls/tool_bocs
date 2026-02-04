@@ -56,3 +56,24 @@ class GradientColors {
 
   static const Color blueLightColor = Colors.lightBlue;
 }
+
+extension ThemeColors on BuildContext {
+  ThemeData get theme => Theme.of(this);
+  ColorScheme get colorScheme => theme.colorScheme;
+  bool get isDarkMode => theme.brightness == Brightness.dark;
+
+  Color get scaffoldBg => theme.scaffoldBackgroundColor;
+  Color get surfaceColor => colorScheme.surface;
+  Color get onSurfaceColor => colorScheme.onSurface;
+  Color get primaryColor => colorScheme.primary;
+  Color get textColor => isDarkMode ? whiteColor : blackColor;
+  Color get subTextColor => isDarkMode ? Colors.white70 : Colors.grey.shade600;
+  Color get dividerColor =>
+      theme.dividerTheme.color ??
+      (isDarkMode ? Colors.white10 : Colors.grey.shade100);
+
+  Color get shimmerBaseColor =>
+      isDarkMode ? Colors.grey.shade900 : Colors.grey.shade300;
+  Color get shimmerHighlightColor =>
+      isDarkMode ? Colors.grey.shade800 : Colors.grey.shade100;
+}

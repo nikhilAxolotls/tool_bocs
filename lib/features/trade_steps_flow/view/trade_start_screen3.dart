@@ -19,7 +19,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bg1Color,
+      backgroundColor: context.scaffoldBg,
       appBar: _buildAppBar(context),
       body: Stack(
         children: [
@@ -41,7 +41,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w800,
                           fontFamily: FontFamily.openSans,
-                          color: blackColor,
+                          color: context.textColor,
                         ),
                       ),
                       SizedBox(height: 4.h),
@@ -49,7 +49,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
                         'Accept the offer and choose a handover location',
                         style: TextStyle(
                           fontSize: 12.sp,
-                          color: greyColor,
+                          color: context.subTextColor,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -72,17 +72,17 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       elevation: 0,
       leading: IconButton(
         onPressed: () => Navigator.pop(context),
-        icon: Icon(Icons.arrow_back_ios, color: blackColor, size: 20.sp),
+        icon: Icon(Icons.arrow_back_ios, color: context.textColor, size: 20.sp),
       ),
       centerTitle: true,
       title: Text(
         'Trade Request',
         style: TextStyle(
-          color: blackColor,
+          color: context.textColor,
           fontSize: 18.sp,
           fontWeight: FontWeight.w700,
           fontFamily: FontFamily.openSans,
@@ -93,7 +93,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
 
   Widget _buildStepper() {
     return Container(
-      color: Colors.white,
+      color: context.scaffoldBg,
       padding: EdgeInsets.only(bottom: 10.h, left: 2.w, right: 2.w),
       child: Row(
         children: [
@@ -112,7 +112,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
         height: 5.h,
         margin: EdgeInsets.symmetric(horizontal: 2.w),
         decoration: BoxDecoration(
-          color: isActive ? defoultColor : greyColor.withOpacity(0.3),
+          color: isActive ? defoultColor : context.dividerColor,
           borderRadius: BorderRadius.circular(8.r),
         ),
       ),
@@ -123,9 +123,9 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: Colors.grey.shade100),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,16 +158,16 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
                             RichText(
                               text: TextSpan(
                                 style: TextStyle(
-                                  color: greyColor,
+                                  color: context.subTextColor,
                                   fontSize: 16.sp,
                                   fontFamily: FontFamily.openSans,
                                 ),
                                 children: [
-                                  const TextSpan(
+                                  TextSpan(
                                     text: 'Riya ',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w800,
-                                        color: Color(0xFF2D2D2D)),
+                                        color: context.textColor),
                                   ),
                                   const TextSpan(text: 'responded :\n'),
                                   const TextSpan(
@@ -176,7 +176,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
                                     text: 'Money ',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w800,
-                                        color: Color(0xFF2D2D2D)),
+                                        color: context.textColor),
                                   ),
                                   const TextSpan(text: 'in return'),
                                 ],
@@ -234,9 +234,9 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: Colors.grey.shade50),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Row(
         children: [
@@ -261,7 +261,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w800,
-                    color: blackColor,
+                    color: context.textColor,
                   ),
                 ),
                 Text(
@@ -277,7 +277,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
                   text: TextSpan(
                     style: TextStyle(
                       fontSize: 11.sp,
-                      color: greyColor,
+                      color: context.subTextColor,
                       fontFamily: FontFamily.openSans,
                     ),
                     children: const [
@@ -331,7 +331,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w700,
                       fontFamily: FontFamily.openSans,
-                      color: blackColor,
+                      color: context.textColor,
                     ),
                   ),
                   _buildRadioButton(isActive: _isAcceptSelected),
@@ -342,9 +342,9 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildPreferenceChip('Come to me'),
-                    _buildPreferenceChip('I Pick Up'),
-                    _buildPreferenceChip('Centre Point'),
+                    _buildPreferenceChip(context, 'Come to me'),
+                    _buildPreferenceChip(context, 'I Pick Up'),
+                    _buildPreferenceChip(context, 'Centre Point'),
                   ],
                 ),
               ],
@@ -364,7 +364,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w700,
                   fontFamily: FontFamily.openSans,
-                  color: blackColor,
+                  color: context.textColor,
                 ),
               ),
               _buildRadioButton(isActive: !_isAcceptSelected),
@@ -384,12 +384,14 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFF1F6FF) : Colors.white,
+          color: isSelected
+              ? (context.isDarkMode ? Colors.white10 : const Color(0xFFF1F6FF))
+              : context.surfaceColor,
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
             color: isSelected
                 ? defoultColor.withOpacity(0.1)
-                : Colors.grey.shade100,
+                : context.dividerColor,
           ),
         ),
         child: child,
@@ -404,7 +406,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: isActive ? defoultColor : greyColor.withOpacity(0.3),
+          color: isActive ? defoultColor : context.dividerColor,
           width: 2.w,
         ),
       ),
@@ -423,7 +425,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
     );
   }
 
-  Widget _buildPreferenceChip(String label) {
+  Widget _buildPreferenceChip(BuildContext context, String label) {
     bool isSelected = _selectedMeetingPreference == label;
     return GestureDetector(
       onTap: () => setState(() => _selectedMeetingPreference = label),
@@ -431,10 +433,10 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
         width: 100.w,
         padding: EdgeInsets.symmetric(vertical: 12.h),
         decoration: BoxDecoration(
-          color: isSelected ? defoultColor : Colors.white,
+          color: isSelected ? defoultColor : context.surfaceColor,
           borderRadius: BorderRadius.circular(10.r),
           border: Border.all(
-              color: isSelected ? defoultColor : greyColor.withOpacity(0.5)),
+              color: isSelected ? defoultColor : context.dividerColor),
           boxShadow: isSelected
               ? []
               : [
@@ -449,7 +451,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : greyColor,
+            color: isSelected ? Colors.white : context.subTextColor,
             fontWeight: FontWeight.w600,
             fontSize: 12.sp,
           ),
@@ -462,14 +464,16 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            offset: const Offset(0, -4),
-            blurRadius: 10,
-          ),
-        ],
+        color: context.surfaceColor,
+        boxShadow: context.isDarkMode
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  offset: const Offset(0, -4),
+                  blurRadius: 10,
+                ),
+              ],
       ),
       child: ElevatedButton(
         onPressed: () {
@@ -498,6 +502,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
     showDialog(
       context: context,
       builder: (context) => Dialog(
+        backgroundColor: context.surfaceColor,
         insetPadding: EdgeInsets.symmetric(horizontal: 24.w),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.r)),
@@ -510,7 +515,8 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
                 alignment: Alignment.topRight,
                 child: GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: Icon(Icons.close, color: blackColor, size: 24.sp),
+                  child:
+                      Icon(Icons.close, color: context.textColor, size: 24.sp),
                 ),
               ),
               SizedBox(height: 16.h),
@@ -520,7 +526,7 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w700,
-                  color: const Color(0xFF2D2D2D),
+                  color: context.textColor,
                   height: 1.5,
                 ),
               ),
@@ -532,14 +538,14 @@ class _TradeStartScreenState extends State<TradeStartScreen> {
                       onPressed: () => Navigator.pop(context),
                       style: OutlinedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 12.h),
-                        side: BorderSide(color: greyColor),
+                        side: BorderSide(color: context.dividerColor),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.r)),
                       ),
                       child: Text(
                         'Cancel',
                         style: TextStyle(
-                          color: blackColor,
+                          color: context.textColor,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w700,
                         ),

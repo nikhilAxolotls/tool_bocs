@@ -15,7 +15,7 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bg1Color,
+      backgroundColor: context.scaffoldBg,
       appBar: _buildAppBar(context),
       body: ListView.builder(
         padding: EdgeInsets.all(20.w),
@@ -35,17 +35,17 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: context.surfaceColor,
       elevation: 0,
       leading: IconButton(
         onPressed: () => Navigator.pop(context),
-        icon: Icon(Icons.arrow_back_ios, color: blackColor),
+        icon: Icon(Icons.arrow_back_ios, color: context.textColor),
       ),
       centerTitle: true,
       title: Text(
         'Transaction History',
         style: TextStyle(
-          color: blackColor,
+          color: context.textColor,
           fontSize: 18.sp,
           fontWeight: FontWeight.w700,
           fontFamily: FontFamily.openSans,
@@ -55,7 +55,7 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
         preferredSize: Size.fromHeight(10.h),
         child: Divider(
           height: 1.h,
-          color: greyColor.withOpacity(0.1),
+          color: context.dividerColor,
           thickness: 1.h,
         ),
       ),
@@ -72,15 +72,18 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: context.dividerColor),
+        boxShadow: context.isDarkMode
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.03),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,7 +98,7 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
                     fontFamily: FontFamily.openSans,
-                    color: const Color(0xFF2D2D2D),
+                    color: context.textColor,
                   ),
                 ),
                 SizedBox(height: 4.h),

@@ -13,7 +13,7 @@ class LogoutDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
       ),
       elevation: 0,
-      backgroundColor: Colors.white,
+      backgroundColor: context.surfaceColor,
       child: _buildDialogContent(context),
     );
   }
@@ -22,8 +22,9 @@ class LogoutDialog extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(15.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -62,7 +63,7 @@ class LogoutDialog extends StatelessWidget {
             style: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.w700,
-              color: blackColor,
+              color: context.textColor,
               fontFamily: FontFamily.openSans,
             ),
           ),
@@ -75,10 +76,10 @@ class LogoutDialog extends StatelessWidget {
                   child: Container(
                     height: 45.h,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEEEEEE),
+                      color: context.scaffoldBg,
                       borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(
-                          color: greyColor.withOpacity(0.5), width: 1.w),
+                      border:
+                          Border.all(color: context.dividerColor, width: 1.w),
                     ),
                     alignment: Alignment.center,
                     child: Text(
@@ -86,7 +87,7 @@ class LogoutDialog extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w700,
-                        color: blackColor,
+                        color: context.textColor,
                         fontFamily: FontFamily.openSans,
                       ),
                     ),

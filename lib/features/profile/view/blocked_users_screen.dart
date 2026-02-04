@@ -9,18 +9,19 @@ class BlockedUsersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FB),
+      backgroundColor: context.scaffoldBg,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: context.surfaceColor,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: blackColor, size: 20.sp),
+          icon:
+              Icon(Icons.arrow_back_ios, color: context.textColor, size: 20.sp),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Blocked Users',
           style: TextStyle(
-            color: blackColor,
+            color: context.textColor,
             fontSize: 18.sp,
             fontWeight: FontWeight.w700,
             fontFamily: FontFamily.openSans,
@@ -29,12 +30,12 @@ class BlockedUsersScreen extends StatelessWidget {
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(10),
-          child: Divider(height: 1, color: greyColor.withOpacity(0.5)),
+          child: Divider(height: 1, color: context.dividerColor),
         ),
       ),
       body: Column(
         children: [
-          _buildInfoBanner(),
+          _buildInfoBanner(context),
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
@@ -47,14 +48,16 @@ class BlockedUsersScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoBanner() {
+  Widget _buildInfoBanner(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(20.w),
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: const Color(0xFFE8F1FF),
+        color: context.isDarkMode
+            ? appColor.withOpacity(0.1)
+            : const Color(0xFFE8F1FF),
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: appColor.withOpacity(0.5)),
+        border: Border.all(color: appColor.withOpacity(0.3)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,7 +68,9 @@ class BlockedUsersScreen extends StatelessWidget {
             child: Text(
               'Blocked users will not be able to see your posts or contact you.',
               style: TextStyle(
-                color: const Color(0xFF42526E),
+                color: context.isDarkMode
+                    ? Colors.white70
+                    : const Color(0xFF42526E),
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w500,
                 fontFamily: FontFamily.openSans,
@@ -82,15 +87,18 @@ class BlockedUsersScreen extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: context.dividerColor),
+        boxShadow: context.isDarkMode
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
       ),
       child: Row(
         children: [
@@ -116,7 +124,7 @@ class BlockedUsersScreen extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(1.r),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.surfaceColor,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -138,7 +146,7 @@ class BlockedUsersScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
-                    color: blackColor,
+                    color: context.textColor,
                     fontFamily: FontFamily.openSans,
                   ),
                 ),
@@ -193,7 +201,7 @@ class BlockedUsersScreen extends StatelessWidget {
   void _showUnblockBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: context.surfaceColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(35.r)),
       ),
@@ -212,7 +220,9 @@ class BlockedUsersScreen extends StatelessWidget {
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => CircleAvatar(
                     radius: 50.r,
-                    backgroundColor: Colors.grey.shade200,
+                    backgroundColor: context.isDarkMode
+                        ? Colors.white10
+                        : Colors.grey.shade200,
                     child: Icon(Icons.person, color: Colors.grey, size: 40.r),
                   ),
                 ),
@@ -223,7 +233,7 @@ class BlockedUsersScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
-                  color: blackColor,
+                  color: context.textColor,
                   fontFamily: FontFamily.openSans,
                 ),
               ),
@@ -232,7 +242,7 @@ class BlockedUsersScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
-                  color: blackColor,
+                  color: context.textColor,
                   fontFamily: FontFamily.openSans,
                 ),
               ),
@@ -266,12 +276,12 @@ class BlockedUsersScreen extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () => Navigator.pop(context),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: blackColor,
+                        backgroundColor: context.surfaceColor,
+                        foregroundColor: context.textColor,
                         padding: EdgeInsets.symmetric(vertical: 14.h),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.r),
-                          side: BorderSide(color: Colors.grey.shade100),
+                          side: BorderSide(color: context.dividerColor),
                         ),
                         elevation: 0,
                       ),

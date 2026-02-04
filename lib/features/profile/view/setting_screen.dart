@@ -15,9 +15,9 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bg1Color,
+      backgroundColor: context.scaffoldBg,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: context.scaffoldBg,
         elevation: 0,
         centerTitle: true,
         title: Text(
@@ -26,16 +26,17 @@ class _SettingScreenState extends State<SettingScreen> {
             fontSize: 18.sp,
             fontWeight: FontWeight.w700,
             fontFamily: FontFamily.openSans,
-            color: blackColor,
+            color: context.textColor,
           ),
         ),
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.arrow_back_ios_new, size: 20.sp, color: blackColor),
+          icon: Icon(Icons.arrow_back_ios_new,
+              size: 20.sp, color: context.textColor),
         ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(10),
-          child: Divider(height: 1, color: Colors.grey.shade100),
+          child: Divider(height: 1, color: context.dividerColor),
         ),
       ),
       body: SingleChildScrollView(
@@ -44,15 +45,17 @@ class _SettingScreenState extends State<SettingScreen> {
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.surfaceColor,
             borderRadius: BorderRadius.circular(12.r),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.02),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
+            boxShadow: context.isDarkMode
+                ? []
+                : [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.02),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -71,6 +74,14 @@ class _SettingScreenState extends State<SettingScreen> {
                 label: 'Help & Support',
                 onTap: () =>
                     Navigator.pushNamed(context, AppRoutes.helpSupport),
+              ),
+              _buildDivider(),
+              _buildSettingItem(
+                context,
+                icon: Icons.palette_outlined,
+                label: 'Theme',
+                onTap: () =>
+                    Navigator.pushNamed(context, AppRoutes.themeChange),
               ),
               _buildDivider(),
               _buildSettingItem(
@@ -110,7 +121,7 @@ class _SettingScreenState extends State<SettingScreen> {
         style: TextStyle(
           fontSize: 15.sp,
           fontWeight: FontWeight.w600,
-          color: blackColor,
+          color: context.textColor,
           fontFamily: FontFamily.openSans,
         ),
       ),
@@ -126,7 +137,7 @@ class _SettingScreenState extends State<SettingScreen> {
     return Divider(
       height: 1,
       thickness: 1,
-      color: Colors.grey.shade100,
+      color: context.dividerColor,
     );
   }
 }

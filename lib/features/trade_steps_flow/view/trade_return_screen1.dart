@@ -27,7 +27,7 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bg1Color,
+      backgroundColor: context.scaffoldBg,
       appBar: _buildAppBar(context),
       body: Column(
         children: [
@@ -42,16 +42,18 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
                     padding:
                         EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.surfaceColor,
                       borderRadius: BorderRadius.circular(10.r),
-                      border: Border.all(color: Colors.grey.shade200),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade200,
-                          blurRadius: 5,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
+                      border: Border.all(color: context.dividerColor),
+                      boxShadow: context.isDarkMode
+                          ? []
+                          : [
+                              BoxShadow(
+                                color: Colors.grey.shade200,
+                                blurRadius: 5,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
                     ),
                     child: Column(
                       children: [
@@ -75,17 +77,17 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       elevation: 0,
       leading: IconButton(
         onPressed: () => Navigator.pop(context),
-        icon: Icon(Icons.arrow_back_ios, color: blackColor, size: 20.sp),
+        icon: Icon(Icons.arrow_back_ios, color: context.textColor, size: 20.sp),
       ),
       centerTitle: true,
       title: Text(
         'Take It',
         style: TextStyle(
-          color: blackColor,
+          color: context.textColor,
           fontSize: 18.sp,
           fontWeight: FontWeight.w700,
           fontFamily: FontFamily.openSans,
@@ -96,7 +98,7 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
 
   Widget _buildStepper() {
     return Container(
-      color: Colors.white,
+      color: context.scaffoldBg,
       padding: EdgeInsets.only(bottom: 10.h, left: 2.w, right: 2.w),
       child: Row(
         children: [
@@ -115,7 +117,7 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
         height: 5.h,
         margin: EdgeInsets.symmetric(horizontal: 2.w),
         decoration: BoxDecoration(
-          color: isActive ? defoultColor : greyColor.withOpacity(0.3),
+          color: isActive ? defoultColor : context.dividerColor,
           borderRadius: BorderRadius.circular(8.r),
         ),
       ),
@@ -126,12 +128,14 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('What do you want in return ?', style: _labelStyle(size: 16)),
+        Text('What do you want in return ?',
+            style: _labelStyle(context, size: 16)),
         SizedBox(height: 16.h),
         Container(
           height: 45.h,
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color:
+                context.isDarkMode ? Colors.white10 : const Color(0xFFF3F4F6),
             borderRadius: BorderRadius.circular(10.r),
           ),
           child: Row(
@@ -150,7 +154,7 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
           Container(
             padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade200),
+              border: Border.all(color: context.dividerColor),
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Column(
@@ -158,8 +162,10 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
               children: [
                 Text(
                   'Desired Price Range : \$${_priceRange.start.toInt()} - \$${_priceRange.end.toInt()}',
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13.sp,
+                      color: context.textColor),
                 ),
                 SizedBox(height: 15.h),
                 RangeSlider(
@@ -168,7 +174,7 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
                   max: 500,
                   padding: EdgeInsets.zero,
                   activeColor: defoultColor,
-                  inactiveColor: Colors.grey.shade200,
+                  inactiveColor: context.dividerColor,
                   onChanged: (val) => setState(() => _priceRange = val),
                 ),
                 SizedBox(height: 25.h),
@@ -202,17 +208,17 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 20.h),
-        Text('Item Name', style: _labelStyle()),
+        Text('Item Name', style: _labelStyle(context)),
         SizedBox(height: 8.h),
         _buildTextField('Enter item name'),
         SizedBox(height: 20.h),
         _buildAddPhotosSection(),
         SizedBox(height: 20.h),
-        Text('Category', style: _labelStyle()),
+        Text('Category', style: _labelStyle(context)),
         SizedBox(height: 8.h),
         _buildDropdown('Select Category'),
         SizedBox(height: 16.h),
-        Text('Condition', style: _labelStyle()),
+        Text('Condition', style: _labelStyle(context)),
         SizedBox(height: 12.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -223,7 +229,7 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
           ],
         ),
         SizedBox(height: 16.h),
-        Text('Description', style: _labelStyle()),
+        Text('Description', style: _labelStyle(context)),
         SizedBox(height: 8.h),
         _buildTextField('Describe your product here...', maxLines: 4),
         SizedBox(height: 12.h),
@@ -296,10 +302,10 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
         decoration: BoxDecoration(
-          color: isSelected ? defoultColor : Colors.white,
+          color: isSelected ? defoultColor : context.surfaceColor,
           borderRadius: BorderRadius.circular(25.r),
           border: Border.all(
-              color: isSelected ? defoultColor : Colors.grey.shade200),
+              color: isSelected ? defoultColor : context.dividerColor),
           boxShadow: isSelected
               ? [
                   BoxShadow(
@@ -312,7 +318,7 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.grey,
+            color: isSelected ? Colors.white : context.subTextColor,
             fontWeight: FontWeight.bold,
             fontSize: 13.sp,
           ),
@@ -327,17 +333,19 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
       maxLines: maxLines,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 13.sp),
+        hintStyle: TextStyle(color: context.subTextColor, fontSize: 13.sp),
         prefixIcon: prefixIcon != null
-            ? Icon(prefixIcon, color: Colors.grey, size: 20.sp)
+            ? Icon(prefixIcon, color: context.subTextColor, size: 20.sp)
             : null,
+        filled: true,
+        fillColor: context.surfaceColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
-          borderSide: BorderSide(color: Colors.grey.shade200),
+          borderSide: BorderSide(color: context.dividerColor),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
-          borderSide: BorderSide(color: Colors.grey.shade200),
+          borderSide: BorderSide(color: context.dividerColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
@@ -352,25 +360,27 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Add Photos', style: _labelStyle(size: 14)),
+        Text('Add Photos', style: _labelStyle(context, size: 14)),
         SizedBox(height: 15.h),
         Container(
           width: double.infinity,
           height: 150.h,
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color:
+                context.isDarkMode ? Colors.white10 : const Color(0xFFF3F4F6),
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
-                color: Colors.grey.shade300, style: BorderStyle.solid),
+                color: context.dividerColor, style: BorderStyle.solid),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.camera_alt_outlined, color: Colors.grey, size: 30.sp),
+              Icon(Icons.camera_alt_outlined,
+                  color: context.subTextColor, size: 30.sp),
               SizedBox(height: 8.h),
               Text(
                 'Add up to 5 photos',
-                style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+                style: TextStyle(color: context.subTextColor, fontSize: 12.sp),
               ),
             ],
           ),
@@ -397,7 +407,9 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
           child: Text(
             label,
             style: TextStyle(
-              color: isSelected ? Colors.white : Colors.black54,
+              color: isSelected
+                  ? Colors.white
+                  : (context.isDarkMode ? Colors.white38 : Colors.black54),
               fontWeight: FontWeight.w600,
               fontSize: 12.sp,
             ),
@@ -412,7 +424,7 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
       width: 70.w,
       height: 70.w,
       decoration: BoxDecoration(
-        color: const Color(0xFFF3F4F6),
+        color: context.isDarkMode ? Colors.white10 : const Color(0xFFF3F4F6),
         borderRadius: BorderRadius.circular(8.r),
       ),
     );
@@ -422,14 +434,14 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: context.dividerColor),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          hint:
-              Text(hint, style: TextStyle(color: Colors.grey, fontSize: 13.sp)),
+          hint: Text(hint,
+              style: TextStyle(color: context.subTextColor, fontSize: 13.sp)),
           isExpanded: true,
           items: [],
           onChanged: (val) {},
@@ -438,11 +450,12 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
     );
   }
 
-  TextStyle _labelStyle({double size = 12}) {
+  TextStyle _labelStyle(BuildContext context, {double size = 12}) {
     return TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: size.sp,
       fontFamily: FontFamily.openSans,
+      color: context.textColor,
     );
   }
 
@@ -450,14 +463,16 @@ class _TradeReturnSearchScreenState extends State<TradeReturnSearchScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            offset: const Offset(0, -4),
-            blurRadius: 10,
-          ),
-        ],
+        color: context.surfaceColor,
+        boxShadow: context.isDarkMode
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  offset: const Offset(0, -4),
+                  blurRadius: 10,
+                ),
+              ],
       ),
       child: ElevatedButton(
         onPressed: () {

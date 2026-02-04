@@ -30,7 +30,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FB),
+      backgroundColor: context.scaffoldBg,
       appBar: _buildAppBar(context),
       body: Stack(
         children: [
@@ -60,7 +60,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   'Tell others about yourself',
                   style: TextStyle(
                     fontSize: 12.sp,
-                    color: blackColor,
+                    color: context.textColor,
                     fontFamily: FontFamily.openSans,
                     fontWeight: FontWeight.w600,
                   ),
@@ -106,7 +106,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 SizedBox(height: 15.h),
                 _buildSectionTitle('Account Actions'),
                 SizedBox(height: 10.h),
-                _buildActionText('Deactivate Account', Colors.grey.shade700),
+                _buildActionText(
+                    'Deactivate Account',
+                    context.isDarkMode
+                        ? Colors.grey.shade400
+                        : Colors.grey.shade700),
                 _buildActionText('Delete Account', Colors.red),
                 SizedBox(height: 100.h),
               ],
@@ -120,17 +124,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       elevation: 0,
       leading: IconButton(
         onPressed: () => Navigator.pop(context),
-        icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+        icon: Icon(Icons.arrow_back_ios, color: context.textColor),
       ),
       centerTitle: true,
       title: Text(
         'Edit Profile',
         style: TextStyle(
-          color: blackColor,
+          color: context.textColor,
           fontSize: 18.sp,
           fontWeight: FontWeight.w700,
           fontFamily: FontFamily.openSans,
@@ -138,7 +142,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(10),
-        child: Divider(height: 1, color: Colors.grey.shade200),
+        child: Divider(height: 1, color: context.dividerColor),
       ),
     );
   }
@@ -158,11 +162,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 right: 2,
                 child: Container(
                   padding: EdgeInsets.all(8.w),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: context.surfaceColor,
                     shape: BoxShape.circle,
                     boxShadow: [
-                      BoxShadow(color: Colors.black12, blurRadius: 4)
+                      BoxShadow(
+                          color: context.isDarkMode
+                              ? Colors.black54
+                              : Colors.black12,
+                          blurRadius: 4)
                     ],
                   ),
                   child:
@@ -192,7 +200,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         fontSize: 18.sp,
         fontWeight: FontWeight.w600,
         fontFamily: FontFamily.openSans,
-        color: blackColor,
+        color: context.textColor,
       ),
     );
   }
@@ -217,7 +225,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             readOnly: readOnly,
             decoration: InputDecoration(
               filled: true,
-              fillColor: readOnly ? Colors.grey.shade100 : Colors.white,
+              fillColor: readOnly
+                  ? (context.isDarkMode ? Colors.white10 : Colors.grey.shade100)
+                  : context.surfaceColor,
               prefixIcon: icon != null
                   ? Icon(icon, color: Colors.grey.shade500, size: 20.sp)
                   : null,
@@ -225,11 +235,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.r),
-                borderSide: BorderSide(color: Colors.grey.shade200),
+                borderSide: BorderSide(color: context.dividerColor),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.r),
-                borderSide: BorderSide(color: Colors.grey.shade200),
+                borderSide: BorderSide(color: context.dividerColor),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.r),
@@ -255,9 +265,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget _buildBioField() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -268,7 +278,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: 14.sp,
-              color: blackColor,
+              color: context.textColor,
               fontFamily: FontFamily.openSans,
               fontWeight: FontWeight.w400,
             ),
@@ -278,7 +288,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               hintText: 'Enter your bio...',
               hintStyle: TextStyle(
                   fontSize: 10.sp,
-                  color: blackColor,
+                  color: context.textColor.withOpacity(0.5),
                   fontFamily: FontFamily.openSans),
             ),
           ),
@@ -302,7 +312,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
-                      color: blackColor,
+                      color: context.textColor,
                       fontFamily: FontFamily.openSans),
                 ),
                 Text(
@@ -329,12 +339,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: Colors.grey.shade100),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10)
-        ],
+        border: Border.all(color: context.dividerColor),
+        boxShadow: context.isDarkMode
+            ? []
+            : [
+                BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10)
+              ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -356,7 +368,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             style: TextStyle(
                 fontSize: 24.sp,
                 fontWeight: FontWeight.w800,
-                color: blackColor),
+                color: context.textColor),
           ),
           SizedBox(height: 4.h),
           Text(

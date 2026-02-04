@@ -9,11 +9,13 @@ import 'package:tool_bocs/features/bottom_navigation_bar/controller/bottom_navba
 import 'package:tool_bocs/features/chat/controller/chat_controller.dart';
 import 'package:tool_bocs/features/splash/controller/on_bording_controller.dart';
 import 'package:tool_bocs/firebase_options.dart';
+import 'package:tool_bocs/util/connectivity_service.dart';
 
 import 'app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ConnectivityService().initialize();
 
   try {
     await Firebase.initializeApp(

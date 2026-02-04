@@ -24,7 +24,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bg1Color,
+      backgroundColor: context.scaffoldBg,
       appBar: _buildAppBar(context),
       body: Stack(
         children: [
@@ -47,7 +47,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w800,
                           fontFamily: FontFamily.openSans,
-                          color: blackColor,
+                          color: context.textColor,
                         ),
                       ),
                       SizedBox(height: 16.h),
@@ -94,17 +94,17 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       elevation: 0,
       leading: IconButton(
         onPressed: () => Navigator.pop(context),
-        icon: Icon(Icons.arrow_back_ios, color: blackColor, size: 20.sp),
+        icon: Icon(Icons.arrow_back_ios, color: context.textColor, size: 20.sp),
       ),
       centerTitle: true,
       title: Text(
         'Give Icecream to Rohan',
         style: TextStyle(
-          color: blackColor,
+          color: context.textColor,
           fontSize: 18.sp,
           fontWeight: FontWeight.w700,
           fontFamily: FontFamily.openSans,
@@ -115,7 +115,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
 
   Widget _buildStepper() {
     return Container(
-      color: Colors.white,
+      color: context.scaffoldBg,
       padding: EdgeInsets.only(bottom: 10.h, left: 2.w, right: 2.w),
       child: Row(
         children: [
@@ -134,7 +134,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
         height: 5.h,
         margin: EdgeInsets.symmetric(horizontal: 2.w),
         decoration: BoxDecoration(
-          color: isActive ? defoultColor : greyColor.withOpacity(0.3),
+          color: isActive ? defoultColor : context.dividerColor,
           borderRadius: BorderRadius.circular(8.r),
         ),
       ),
@@ -145,16 +145,18 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: Colors.grey.shade100),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade100,
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        border: Border.all(color: context.dividerColor),
+        boxShadow: context.isDarkMode
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.grey.shade100,
+                  blurRadius: 10,
+                  offset: const Offset(0, 2),
+                ),
+              ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,6 +191,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w800,
                                 fontFamily: FontFamily.openSans,
+                                color: context.textColor,
                               ),
                             ),
                           ],
@@ -211,14 +214,15 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w800,
                         fontFamily: FontFamily.openSans,
+                        color: context.textColor,
                       ),
                     ),
                     SizedBox(height: 16.h),
                     _buildIconLabel(
-                        Icons.swap_horiz, 'Take Type : ', 'Permanent'),
+                        context, Icons.swap_horiz, 'Take Type : ', 'Permanent'),
                     SizedBox(height: 4.h),
-                    _buildIconLabel(
-                        Icons.category_outlined, 'Category : ', 'Other'),
+                    _buildIconLabel(context, Icons.category_outlined,
+                        'Category : ', 'Other'),
                   ],
                 ),
               ),
@@ -243,12 +247,13 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Icon(Icons.location_on, color: greyColor, size: 18.sp),
+                        Icon(Icons.location_on,
+                            color: context.subTextColor, size: 18.sp),
                         SizedBox(width: 4.w),
                         Text(
                           '0.4 miles away',
                           style: TextStyle(
-                            color: greyColor,
+                            color: context.subTextColor,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w600,
                           ),
@@ -265,7 +270,8 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
     );
   }
 
-  Widget _buildIconLabel(IconData icon, String label, String value) {
+  Widget _buildIconLabel(
+      BuildContext context, IconData icon, String label, String value) {
     return Row(
       children: [
         // Icon(icon, color: greyColor, size: 14.sp),
@@ -273,7 +279,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
         RichText(
           text: TextSpan(
             style: TextStyle(
-              color: greyColor,
+              color: context.subTextColor,
               fontSize: 11.sp,
               fontFamily: FontFamily.openSans,
             ),
@@ -302,12 +308,14 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
       child: Container(
         padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFF1F6FF) : Colors.white,
+          color: isSelected
+              ? (context.isDarkMode ? Colors.white10 : const Color(0xFFF1F6FF))
+              : context.surfaceColor,
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
             color: isSelected
                 ? defoultColor.withOpacity(0.1)
-                : Colors.grey.shade100,
+                : context.dividerColor,
           ),
         ),
         child: Column(
@@ -325,6 +333,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w700,
                           fontFamily: FontFamily.openSans,
+                          color: context.textColor,
                         ),
                       ),
                       if (subtitle != null) ...[
@@ -333,7 +342,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
                           subtitle,
                           style: TextStyle(
                             fontSize: 11.sp,
-                            color: greyColor,
+                            color: context.subTextColor,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -347,9 +356,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: isSelected
-                          ? defoultColor
-                          : greyColor.withOpacity(0.3),
+                      color: isSelected ? defoultColor : context.dividerColor,
                       width: 2.w,
                     ),
                   ),
@@ -380,9 +387,9 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
       margin: EdgeInsets.only(top: 16.h),
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: Colors.grey.shade50),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Row(
         children: [
@@ -407,14 +414,14 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w700,
-                    color: blackColor,
+                    color: context.textColor,
                   ),
                 ),
                 Text(
                   'Food',
                   style: TextStyle(
                     fontSize: 12.sp,
-                    color: greyColor,
+                    color: context.subTextColor,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -431,31 +438,31 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 16.h),
-        _buildLabel('Item Name'),
+        _buildLabel(context, 'Item Name'),
         SizedBox(height: 8.h),
-        _buildTextField('Enter item name'),
+        _buildTextField(context, 'Enter item name'),
         SizedBox(height: 16.h),
-        _buildLabel('Category'),
+        _buildLabel(context, 'Category'),
         SizedBox(height: 8.h),
-        _buildDropdown('Select Category'),
+        _buildDropdown(context, 'Select Category'),
         SizedBox(height: 16.h),
-        _buildLabel('Condition'),
+        _buildLabel(context, 'Condition'),
         SizedBox(height: 12.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildConditionChip('New'),
-            _buildConditionChip('Like New'),
-            _buildConditionChip('Used'),
+            _buildConditionChip(context, 'New'),
+            _buildConditionChip(context, 'Like New'),
+            _buildConditionChip(context, 'Used'),
           ],
         ),
         SizedBox(height: 16.h),
         Row(
           children: [
-            _buildCheckbox('Homemade', _isHomemade,
+            _buildCheckbox(context, 'Homemade', _isHomemade,
                 (val) => setState(() => _isHomemade = val!)),
             SizedBox(width: 20.w),
-            _buildCheckbox('Store bought', _isStoreBought,
+            _buildCheckbox(context, 'Store bought', _isStoreBought,
                 (val) => setState(() => _isStoreBought = val!)),
           ],
         ),
@@ -474,6 +481,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
             fontSize: 14.sp,
             fontWeight: FontWeight.w700,
             fontFamily: FontFamily.openSans,
+            color: context.textColor,
           ),
         ),
         SizedBox(height: 12.h),
@@ -483,7 +491,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
           max: 500,
           padding: EdgeInsets.zero,
           activeColor: defoultColor,
-          inactiveColor: const Color(0xFFE0E2E7),
+          inactiveColor: context.dividerColor,
           onChanged: (val) => setState(() => _priceRange = val),
         ),
         SizedBox(height: 12.h),
@@ -502,7 +510,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
-                color: const Color(0xFF475467),
+                color: context.subTextColor,
               ),
             ),
           ],
@@ -511,30 +519,31 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
     );
   }
 
-  Widget _buildLabel(String text) {
+  Widget _buildLabel(BuildContext context, String text) {
     return Text(
       text,
       style: TextStyle(
         fontSize: 14.sp,
         fontWeight: FontWeight.w700,
         fontFamily: FontFamily.openSans,
-        color: blackColor,
+        color: context.textColor,
       ),
     );
   }
 
-  Widget _buildTextField(String hint) {
+  Widget _buildTextField(BuildContext context, String hint) {
     return Container(
       // height: 44.h,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(color: greyColor.withOpacity(0.5)),
+        border: Border.all(color: context.dividerColor),
       ),
       child: TextField(
         decoration: InputDecoration(
           hintText: hint,
-          hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13.sp),
+          hintStyle: TextStyle(
+              color: context.subTextColor.withOpacity(0.5), fontSize: 13.sp),
           contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
           border: InputBorder.none,
         ),
@@ -542,42 +551,44 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
     );
   }
 
-  Widget _buildDropdown(String hint) {
+  Widget _buildDropdown(BuildContext context, String hint) {
     return Container(
       height: 48.h,
       padding: EdgeInsets.symmetric(horizontal: 12.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(color: greyColor.withOpacity(0.5)),
+        border: Border.all(color: context.dividerColor),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(hint,
-              style: TextStyle(color: Colors.grey.shade400, fontSize: 13.sp)),
-          const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+              style: TextStyle(
+                  color: context.subTextColor.withOpacity(0.5),
+                  fontSize: 13.sp)),
+          Icon(Icons.keyboard_arrow_down, color: context.subTextColor),
         ],
       ),
     );
   }
 
-  Widget _buildConditionChip(String label) {
+  Widget _buildConditionChip(BuildContext context, String label) {
     bool isSelected = _customItemCondition == label;
     return GestureDetector(
       onTap: () => setState(() => _customItemCondition = label),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
         decoration: BoxDecoration(
-          color: isSelected ? defoultColor : Colors.white,
+          color: isSelected ? defoultColor : context.surfaceColor,
           borderRadius: BorderRadius.circular(20.r),
           border: Border.all(
-              color: isSelected ? defoultColor : greyColor.withOpacity(0.5)),
+              color: isSelected ? defoultColor : context.dividerColor),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? whiteColor : greyColor,
+            color: isSelected ? whiteColor : context.subTextColor,
             fontWeight: FontWeight.w700,
             fontSize: 12.sp,
           ),
@@ -586,8 +597,8 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
     );
   }
 
-  Widget _buildCheckbox(
-      String label, bool value, ValueChanged<bool?> onChanged) {
+  Widget _buildCheckbox(BuildContext context, String label, bool value,
+      ValueChanged<bool?> onChanged) {
     return Row(
       children: [
         SizedBox(
@@ -608,7 +619,7 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,
             fontFamily: FontFamily.openSans,
-            color: blackColor,
+            color: context.textColor,
           ),
         ),
       ],
@@ -619,14 +630,16 @@ class _TradeOfferScreenState extends State<TradeOfferScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            offset: const Offset(0, -4),
-            blurRadius: 10,
-          ),
-        ],
+        color: context.surfaceColor,
+        boxShadow: context.isDarkMode
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  offset: const Offset(0, -4),
+                  blurRadius: 10,
+                ),
+              ],
       ),
       child: ElevatedButton(
         onPressed: () {

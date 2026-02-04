@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final shimmer = context.watch<ShimmerController>();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       body: Column(
         children: [
           _buildHeader(context),
@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       _buildDistanceSection(context),
                       Divider(
-                        color: greyColor.withOpacity(0.4),
+                        color: context.dividerColor,
                         thickness: 1.h,
                         height: 1.h,
                       ),
@@ -267,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: whiteColor,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Column(
@@ -278,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(
               fontSize: 16.sp,
               fontWeight: FontWeight.w700,
-              color: blackColor,
+              color: context.textColor,
               fontFamily: FontFamily.openSans,
             ),
           ),
@@ -301,9 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 '${distance.round()} km',
                 style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w800,
-                  color: blackColor,
+                  color: context.textColor,
                 ),
               ),
             ],
@@ -336,16 +334,18 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.surfaceColor,
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: Colors.grey.withOpacity(0.2)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
-              blurRadius: 10.r,
-              offset: Offset(0, 5.h),
-            ),
-          ],
+          border: Border.all(color: context.dividerColor),
+          boxShadow: context.isDarkMode
+              ? []
+              : [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.05),
+                    blurRadius: 10.r,
+                    offset: Offset(0, 5.h),
+                  ),
+                ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -367,6 +367,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16.sp,
+                          color: context.textColor,
                         ),
                       ),
                     ],
@@ -414,7 +415,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             "$owner  •  $category",
                             style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 12.sp),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12.sp,
+                                color: context.textColor),
                           ),
                         ],
                       ),
@@ -424,7 +427,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             "$rating ",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 12.sp),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12.sp,
+                                color: context.textColor),
                           ),
                           SizedBox(width: 4.w),
                           ...List.generate(
@@ -502,7 +507,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         Divider(
-          color: greyColor.withOpacity(0.4),
+          color: context.dividerColor,
           thickness: 1.h,
           height: 1.h,
         ),
@@ -515,9 +520,9 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.only(bottom: 12.h),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: context.surfaceColor,
                   borderRadius: BorderRadius.circular(12.r),
-                  border: Border.all(color: Colors.grey.withOpacity(0.2)),
+                  border: Border.all(color: context.dividerColor),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

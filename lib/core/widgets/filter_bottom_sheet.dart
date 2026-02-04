@@ -32,7 +32,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.77,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.vertical(top: Radius.circular(35.r)),
       ),
       child: Stack(
@@ -46,7 +46,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               children: [
                 _buildHeader(),
                 Divider(
-                  color: Colors.grey.shade300,
+                  color: context.dividerColor,
                   thickness: 1,
                 ),
                 _buildCategorySection(),
@@ -73,10 +73,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               decoration: BoxDecoration(
-                color: whiteColor,
+                color: context.surfaceColor,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.shade300,
+                    color: context.dividerColor.withOpacity(0.5),
                     blurRadius: 10,
                     offset: const Offset(0, -5),
                   ),
@@ -95,7 +95,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
       children: [
         IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.close, color: blackColor),
+          icon: Icon(Icons.close, color: context.textColor),
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints(),
         ),
@@ -106,7 +106,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w700,
-                color: blackColor,
+                color: context.textColor,
                 fontFamily: FontFamily.openSans,
               ),
             ),
@@ -153,12 +153,13 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         width: 20.w,
                         height: 20.w,
                         decoration: BoxDecoration(
-                          color: isSelected ? defoultColor : Colors.white,
+                          color:
+                              isSelected ? defoultColor : context.surfaceColor,
                           borderRadius: BorderRadius.circular(4.r),
                           border: Border.all(
                               color: isSelected
                                   ? defoultColor
-                                  : Colors.grey.shade400),
+                                  : context.dividerColor),
                         ),
                         child: isSelected
                             ? Icon(Icons.check,
@@ -170,7 +171,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         category,
                         style: TextStyle(
                           fontSize: 14.sp,
-                          color: Colors.grey.shade600,
+                          color: context.subTextColor,
                           fontFamily: FontFamily.openSans,
                         ),
                       ),
@@ -202,7 +203,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 max: 50,
                 padding: EdgeInsets.zero,
                 activeColor: defoultColor,
-                inactiveColor: Colors.grey.shade200,
+                inactiveColor: context.dividerColor,
                 onChanged: (val) => setState(() => distance = val),
               ),
             ),
@@ -212,14 +213,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
-                color: blackColor,
+                color: context.textColor,
               ),
             ),
           ],
         ),
         Text(
           'Show items near you',
-          style: TextStyle(fontSize: 12.sp, color: Colors.grey.shade500),
+          style: TextStyle(fontSize: 12.sp, color: context.subTextColor),
         ),
       ],
     );
@@ -245,10 +246,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     ? EdgeInsets.symmetric(horizontal: 25.w, vertical: 8.h)
                     : EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
                 decoration: BoxDecoration(
-                  color: isSelected ? defoultColor : Colors.white,
+                  color: isSelected ? defoultColor : context.surfaceColor,
                   borderRadius: BorderRadius.circular(20.r),
                   border: Border.all(
-                      color: isSelected ? defoultColor : Colors.grey.shade300),
+                      color: isSelected ? defoultColor : context.dividerColor),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -265,7 +266,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                       rating,
                       style: TextStyle(
                         fontSize: 14.sp,
-                        color: isSelected ? Colors.white : Colors.grey.shade600,
+                        color: isSelected ? Colors.white : context.subTextColor,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -304,17 +305,17 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 8.h),
           decoration: BoxDecoration(
-            color: isSelected ? defoultColor : Colors.white,
+            color: isSelected ? defoultColor : context.surfaceColor,
             borderRadius: BorderRadius.circular(22.r),
             border: Border.all(
-                color: isSelected ? defoultColor : Colors.grey.shade300),
+                color: isSelected ? defoultColor : context.dividerColor),
           ),
           alignment: Alignment.center,
           child: Text(
             type,
             style: TextStyle(
               fontSize: 16.sp,
-              color: isSelected ? Colors.white : Colors.grey.shade600,
+              color: isSelected ? Colors.white : context.subTextColor,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -342,10 +343,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     width: 20.w,
                     height: 20.w,
                     decoration: BoxDecoration(
-                      color: isSelected ? defoultColor : Colors.white,
+                      color: isSelected ? defoultColor : context.surfaceColor,
                       borderRadius: BorderRadius.circular(4.r),
                       border: Border.all(
-                        color: isSelected ? defoultColor : Colors.grey.shade400,
+                        color: isSelected ? defoultColor : context.dividerColor,
                       ),
                     ),
                     child: isSelected
@@ -357,7 +358,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     option,
                     style: TextStyle(
                       fontSize: 11.sp,
-                      color: Colors.grey.shade600,
+                      color: context.subTextColor,
                       fontFamily: FontFamily.openSans,
                     ),
                   ),
@@ -405,8 +406,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               });
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFF3F4F6),
-              foregroundColor: Colors.grey.shade700,
+              backgroundColor:
+                  context.isDarkMode ? Colors.white10 : const Color(0xFFF3F4F6),
+              foregroundColor: context.subTextColor,
               elevation: 0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.r)),
@@ -426,7 +428,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     return TextStyle(
       fontSize: 16.sp,
       fontWeight: FontWeight.w700,
-      color: blackColor,
+      color: context.textColor,
       fontFamily: FontFamily.openSans,
     );
   }

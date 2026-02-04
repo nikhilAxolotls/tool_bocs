@@ -15,7 +15,7 @@ class ChatListScreen extends StatelessWidget {
     final shimmer = context.watch<ShimmerController>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF3F4F6),
+      backgroundColor: context.scaffoldBg,
       body: shimmer.isLoading
           ? _buildShimmer(context)
           : Column(
@@ -40,7 +40,7 @@ class ChatListScreen extends StatelessWidget {
                 //     ),
                 //   ),
                 // ),
-                _buildSearchBox(),
+                _buildSearchBox(context),
                 Expanded(
                   child: ListView(
                     padding: EdgeInsets.zero,
@@ -130,8 +130,8 @@ class ChatListScreen extends StatelessWidget {
             itemCount: 8,
             itemBuilder: (context, index) => Container(
               padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
-              decoration: const BoxDecoration(
-                border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE))),
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: context.dividerColor)),
               ),
               child: Row(
                 children: [
@@ -170,7 +170,7 @@ class ChatListScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchBox() {
+  Widget _buildSearchBox(BuildContext context) {
     return Container(
       color: defoultColor,
       padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 20.h),
@@ -178,16 +178,16 @@ class ChatListScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 15.w),
         height: 50.h,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.surfaceColor,
           borderRadius: BorderRadius.circular(10.r),
         ),
         child: Row(
           children: [
-            Icon(Icons.search, color: Colors.grey.shade400),
+            Icon(Icons.search, color: context.subTextColor),
             SizedBox(width: 10.w),
             Text(
               'Search ...',
-              style: TextStyle(color: Colors.grey.shade400, fontSize: 16.sp),
+              style: TextStyle(color: context.subTextColor, fontSize: 16.sp),
             ),
           ],
         ),
@@ -216,8 +216,8 @@ class ChatListScreen extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
-        decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE))),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: context.dividerColor)),
         ),
         child: Row(
           children: [
@@ -238,7 +238,7 @@ class ChatListScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w700,
-                          color: blackColor,
+                          color: context.textColor,
                           fontFamily: FontFamily.openSans,
                         ),
                       ),
@@ -283,7 +283,7 @@ class ChatListScreen extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 14.sp,
-                            color: Colors.grey.shade500,
+                            color: context.subTextColor,
                             fontWeight: FontWeight.w600,
                             fontFamily: FontFamily.openSans,
                           ),

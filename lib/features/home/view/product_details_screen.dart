@@ -56,13 +56,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: context.surfaceColor,
         elevation: 0,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.arrow_back_ios_new, color: blackColor, size: 20.sp),
+          icon: Icon(Icons.arrow_back_ios_new,
+              color: context.textColor, size: 20.sp),
         ),
         centerTitle: true,
         title: Text(
@@ -71,7 +72,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             fontSize: 18.sp,
             fontWeight: FontWeight.w700,
             fontFamily: FontFamily.openSans,
-            color: blackColor,
+            color: context.textColor,
           ),
         ),
         actions: [
@@ -85,7 +86,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             shape: PopupMenuArrowShape(
               borderRadius: 10.r,
             ),
-            color: whiteColor,
+            color: context.surfaceColor,
             elevation: 4,
             itemBuilder: (context) => [
               PopupMenuItem<String>(
@@ -97,7 +98,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     'Block',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: blackColor,
+                      color: context.textColor,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                       fontFamily: FontFamily.openSans,
@@ -113,7 +114,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   child: Text(
                     'Report',
                     style: TextStyle(
-                      color: blackColor,
+                      color: context.textColor,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                       fontFamily: FontFamily.openSans,
@@ -126,7 +127,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               padding: EdgeInsets.only(right: 15.w),
               child: Icon(
                 Icons.more_vert,
-                color: blackColor,
+                color: context.textColor,
                 size: 28.sp,
               ),
             ),
@@ -134,7 +135,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(10),
-          child: Divider(height: 1, color: Colors.grey.shade100),
+          child: Divider(height: 1, color: context.dividerColor),
         ),
       ),
       body: SingleChildScrollView(
@@ -158,7 +159,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w700,
                       fontFamily: FontFamily.openSans,
-                      color: blackColor,
+                      color: context.textColor,
                     ),
                   ),
                   SizedBox(height: 10.h),
@@ -166,7 +167,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     'This iPhone 12 is in excellent condition, barely used, with no scratches or dents. It comes with 128GB storage, perfect for all your apps and media. Battery health is at 95%. Includes original box and charging cable. Selling because I upgraded to a newer model. Ready for a new home!',
                     style: TextStyle(
                       fontSize: 12.sp,
-                      color: greyColor,
+                      color: context.subTextColor,
                       height: 1.6,
                       fontFamily: FontFamily.openSans,
                       fontWeight: FontWeight.w500,
@@ -182,8 +183,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       bottomNavigationBar: Container(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(top: BorderSide(color: Colors.grey.shade100)),
+          color: context.surfaceColor,
+          border: Border(top: BorderSide(color: context.dividerColor)),
         ),
         child: ElevatedButton(
           onPressed: () {
@@ -302,16 +303,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         margin: EdgeInsets.symmetric(horizontal: 20.w),
         padding: EdgeInsets.all(12.w),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.surfaceColor,
           borderRadius: BorderRadius.circular(16.r),
-          border: Border.all(color: Colors.grey.shade100),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          border: Border.all(color: context.dividerColor),
+          boxShadow: context.isDarkMode
+              ? []
+              : [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.04),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
         ),
         child: Row(
           children: [
@@ -337,7 +340,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w700,
                           fontFamily: FontFamily.openSans,
-                          color: blackColor,
+                          color: context.textColor,
                         ),
                       ),
                       SizedBox(width: 8.w),
@@ -373,7 +376,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           fontSize: 13.sp,
                           fontWeight: FontWeight.w700,
                           fontFamily: FontFamily.openSans,
-                          color: blackColor,
+                          color: context.textColor,
                         ),
                       ),
                       SizedBox(width: 4.w),
@@ -383,7 +386,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
                           fontFamily: FontFamily.openSans,
-                          color: Colors.grey,
+                          color: context.subTextColor,
                         ),
                       ),
                     ],

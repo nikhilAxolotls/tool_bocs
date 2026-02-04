@@ -14,7 +14,7 @@ class NotificationsScreen extends StatelessWidget {
     final shimmer = context.watch<ShimmerController>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FB),
+      backgroundColor: context.scaffoldBg,
       appBar: _buildAppBar(context),
       body: shimmer.isLoading
           ? _buildShimmer(context)
@@ -23,8 +23,9 @@ class NotificationsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildSectionHeader('Matches'),
+                  _buildSectionHeader(context, 'Matches'),
                   _buildNotificationCard(
+                    context,
                     imagePath: 'assets/food1.png',
                     distance: '75m',
                     message: [
@@ -58,20 +59,20 @@ class NotificationsScreen extends StatelessWidget {
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w700,
                             fontFamily: FontFamily.openSans,
-                            color: blackColor,
+                            color: context.textColor,
                           ),
                         ),
                         Row(
                           children: [
                             Icon(Icons.filter_list_outlined,
-                                size: 18.sp, color: blackColor),
+                                size: 18.sp, color: context.textColor),
                             SizedBox(width: 4.w),
                             Text(
                               'Filter',
                               style: TextStyle(
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.w600,
-                                color: blackColor,
+                                color: context.textColor,
                                 fontFamily: FontFamily.openSans,
                               ),
                             ),
@@ -82,6 +83,7 @@ class NotificationsScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 12.h),
                   _buildNotificationCard(
+                    context,
                     imagePath: 'assets/mobile1.png',
                     distance: '75m',
                     message: [
@@ -95,7 +97,7 @@ class NotificationsScreen extends StatelessWidget {
                       TextSpan(
                         text: '(Permanent - Mobile - Like new)',
                         style: TextStyle(
-                          color: Colors.grey.shade400,
+                          color: context.subTextColor,
                           fontSize: 11.sp,
                         ),
                       ),
@@ -108,6 +110,7 @@ class NotificationsScreen extends StatelessWidget {
                     ],
                   ),
                   _buildNotificationCard(
+                    context,
                     imagePath: 'assets/veg1.png',
                     distance: '75m',
                     message: [
@@ -121,7 +124,7 @@ class NotificationsScreen extends StatelessWidget {
                       TextSpan(
                         text: 'Giving Grocery in return',
                         style: TextStyle(
-                          color: Colors.grey.shade400,
+                          color: context.subTextColor,
                           fontSize: 11.sp,
                         ),
                       ),
@@ -141,17 +144,17 @@ class NotificationsScreen extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       elevation: 0,
       leading: IconButton(
         onPressed: () => Navigator.pop(context),
-        icon: Icon(Icons.arrow_back_ios, color: blackColor, size: 20.sp),
+        icon: Icon(Icons.arrow_back_ios, color: context.textColor, size: 20.sp),
       ),
       centerTitle: true,
       title: Text(
         'Notifications',
         style: TextStyle(
-          color: blackColor,
+          color: context.textColor,
           fontSize: 18.sp,
           fontWeight: FontWeight.w700,
           fontFamily: FontFamily.openSans,
@@ -159,12 +162,12 @@ class NotificationsScreen extends StatelessWidget {
       ),
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(10),
-        child: Divider(height: 1, color: Colors.grey.shade300),
+        child: Divider(height: 1, color: context.dividerColor),
       ),
     );
   }
 
-  Widget _buildSectionHeader(String title) {
+  Widget _buildSectionHeader(BuildContext context, String title) {
     return Padding(
       padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 12.h),
       child: Text(
@@ -173,13 +176,14 @@ class NotificationsScreen extends StatelessWidget {
           fontSize: 18.sp,
           fontWeight: FontWeight.w700,
           fontFamily: FontFamily.openSans,
-          color: blackColor,
+          color: context.textColor,
         ),
       ),
     );
   }
 
-  Widget _buildNotificationCard({
+  Widget _buildNotificationCard(
+    BuildContext context, {
     required String imagePath,
     required String distance,
     required List<TextSpan> message,
@@ -190,15 +194,17 @@ class NotificationsScreen extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 6.h),
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: context.isDarkMode
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,8 +221,13 @@ class NotificationsScreen extends StatelessWidget {
                   errorBuilder: (context, error, stackTrace) => Container(
                     width: 85.w,
                     height: 75.w,
-                    color: Colors.grey.shade200,
-                    child: Icon(Icons.image, color: Colors.grey.shade400),
+                    color: context.isDarkMode
+                        ? Colors.white10
+                        : Colors.grey.shade200,
+                    child: Icon(Icons.image,
+                        color: context.isDarkMode
+                            ? Colors.white24
+                            : Colors.grey.shade400),
                   ),
                 ),
               ),
@@ -250,7 +261,7 @@ class NotificationsScreen extends StatelessWidget {
                   text: TextSpan(
                     style: TextStyle(
                       fontSize: 13.sp,
-                      color: blackColor,
+                      color: context.textColor,
                       fontFamily: FontFamily.openSans,
                     ),
                     children: message,
@@ -261,7 +272,7 @@ class NotificationsScreen extends StatelessWidget {
                   text: TextSpan(
                     style: TextStyle(
                       fontSize: 12.sp,
-                      color: Colors.grey.shade600,
+                      color: context.subTextColor,
                       fontFamily: FontFamily.openSans,
                     ),
                     children: subMessage,
@@ -307,7 +318,7 @@ class NotificationsScreen extends StatelessWidget {
             child: ShimmerBox(height: 20.h, width: 80.w),
           ),
           SizedBox(height: 12.h),
-          _buildShimmerCard(),
+          _buildShimmerCard(context),
           SizedBox(height: 30.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -320,19 +331,19 @@ class NotificationsScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 12.h),
-          _buildShimmerCard(),
-          _buildShimmerCard(),
+          _buildShimmerCard(context),
+          _buildShimmerCard(context),
         ],
       ),
     );
   }
 
-  Widget _buildShimmerCard() {
+  Widget _buildShimmerCard(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 6.h),
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Row(

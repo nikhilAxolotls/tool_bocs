@@ -13,7 +13,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -51,7 +51,7 @@ class LoginScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontFamily: FontFamily.openSans,
-                    color: greyColor,
+                    color: context.subTextColor,
                   ),
                 ),
 
@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                   height: 56.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(color: Colors.grey.shade300),
+                    border: Border.all(color: context.dividerColor),
                   ),
                   child: Row(
                     children: [
@@ -71,20 +71,21 @@ class LoginScreen extends StatelessWidget {
                         '+91',
                         style: TextStyle(
                           fontSize: 16.sp,
-                          color: greyColor,
+                          color: context.subTextColor,
                           fontFamily: FontFamily.openSans,
                         ),
                       ),
                       SizedBox(width: 8.w),
                       VerticalDivider(
                         thickness: 1.w,
-                        color: Colors.grey.shade300,
+                        color: context.dividerColor,
                       ),
                       SizedBox(width: 2.w),
                       Expanded(
                         child: TextField(
                           keyboardType: TextInputType.phone,
-                          style: TextStyle(fontSize: 16.sp),
+                          style: TextStyle(
+                              fontSize: 16.sp, color: context.textColor),
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(
@@ -112,7 +113,7 @@ class LoginScreen extends StatelessWidget {
                             hintStyle: TextStyle(
                               fontSize: 14.sp,
                               fontFamily: FontFamily.openSans,
-                              color: greyColor,
+                              color: context.subTextColor,
                             ),
                           ),
                           controller: _phoneController,
@@ -172,7 +173,7 @@ class LoginScreen extends StatelessWidget {
                       'or ',
                       style: TextStyle(
                         fontSize: 14.sp,
-                        color: greyColor,
+                        color: context.subTextColor,
                         fontFamily: FontFamily.openSans,
                       ),
                     ),

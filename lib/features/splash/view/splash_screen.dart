@@ -59,6 +59,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.scaffoldBg,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -71,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen>
                   height: 150.h,
                   width: 150.w,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.scaffoldBg,
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -88,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen>
                           fontFamily: FontFamily.openSans,
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
-                          color: appColor,
+                          color: context.isDarkMode ? Colors.white : appColor,
                         ),
                       ),
                     ],
@@ -101,7 +102,7 @@ class _SplashScreenState extends State<SplashScreen>
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.scaffoldBg,
             ),
             child: Image.asset(
               'assets/undraw_walk.png',

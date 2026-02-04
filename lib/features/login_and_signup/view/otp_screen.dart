@@ -31,7 +31,7 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -43,7 +43,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 alignment: Alignment.centerLeft,
                 child: IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.arrow_back_ios),
+                  icon: Icon(Icons.arrow_back_ios, color: context.textColor),
                   iconSize: 24.sp,
                 ),
               ),
@@ -63,7 +63,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14.sp,
-                  color: greyColor,
+                  color: context.subTextColor,
                   fontFamily: FontFamily.openSans,
                 ),
               ),
@@ -78,7 +78,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       border: Border.all(
                         color: _controllers[index].text.isNotEmpty
                             ? defoultColor
-                            : greyColor.withOpacity(0.3),
+                            : context.dividerColor,
                       ),
                       borderRadius: BorderRadius.circular(8.r),
                     ),
@@ -116,7 +116,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 '00:24',
                 style: TextStyle(
                   fontSize: 14.sp,
-                  color: greyColor,
+                  color: context.subTextColor,
                   fontFamily: FontFamily.openSans,
                 ),
               ),
@@ -128,7 +128,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     "Didn't receive the code? ",
                     style: TextStyle(
                       fontSize: 14.sp,
-                      color: greyColor,
+                      color: context.subTextColor,
                       fontFamily: FontFamily.openSans,
                     ),
                   ),

@@ -25,7 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: context.scaffoldBg,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -53,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 'Just a few details to get started',
                 style: TextStyle(
                   fontSize: 14.sp,
-                  color: greyColor,
+                  color: context.subTextColor,
                   fontFamily: FontFamily.openSans,
                 ),
               ),
@@ -91,7 +91,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
-                    color: blackColor.withOpacity(0.7),
+                    color: context.textColor,
                     fontFamily: FontFamily.openSans,
                   ),
                 ),
@@ -132,7 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       text: TextSpan(
                         text: 'I agree to the ',
                         style: TextStyle(
-                          color: greyColor,
+                          color: context.subTextColor,
                           fontSize: 14.sp,
                           fontFamily: FontFamily.openSans,
                         ),
@@ -204,7 +204,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           style: TextStyle(
             fontSize: 16.sp,
             fontWeight: FontWeight.w600,
-            color: blackColor.withOpacity(0.7),
+            color: context.textColor,
             fontFamily: FontFamily.openSans,
           ),
         ),
@@ -217,17 +217,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
             hintText: hint,
             hintStyle: TextStyle(
               fontSize: 14.sp,
-              color: greyColor,
+              color: context.subTextColor,
               fontFamily: FontFamily.openSans,
             ),
-            prefixIcon: Icon(icon, color: greyColor, size: 20.sp),
+            prefixIcon: Icon(icon, color: context.subTextColor, size: 20.sp),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(color: Colors.grey.shade300),
+              borderSide: BorderSide(color: context.dividerColor),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(color: Colors.grey.shade300),
+              borderSide: BorderSide(color: context.dividerColor),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
@@ -258,7 +258,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           value,
           style: TextStyle(
             fontSize: 14.sp,
-            color: greyColor,
+            color: context.subTextColor,
             fontFamily: FontFamily.openSans,
           ),
         ),

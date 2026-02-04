@@ -24,4 +24,6 @@ class AppRoutes {
   static const tradeDetails = '/tradeDetails';
   static const termsConditions = '/termsConditions';
   static const privacyPolicy = '/privacyPolicy';
+  static const themeChange = '/themeChange';
+  static const noInternet = '/noInternet';
 }

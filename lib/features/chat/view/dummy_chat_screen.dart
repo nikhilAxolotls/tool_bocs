@@ -64,7 +64,7 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF3F4F6),
+      backgroundColor: context.scaffoldBg,
       appBar: _buildAppBar(),
       body: Column(
         children: [
@@ -86,12 +86,13 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
 
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       elevation: 0,
       leading: Padding(
         padding: EdgeInsets.only(left: 16.0.w),
         child: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 22.sp),
+          icon:
+              Icon(Icons.arrow_back_ios, color: context.textColor, size: 22.sp),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -99,7 +100,7 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
         IconButton(
           padding: EdgeInsets.only(right: 16.w),
           icon: const Icon(Icons.more_vert),
-          color: blackColor,
+          color: context.textColor,
           onPressed: () {
             showDialog(
               context: context,
@@ -112,7 +113,7 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
       title: Text(
         'Message',
         style: TextStyle(
-          color: blackColor,
+          color: context.textColor,
           fontWeight: FontWeight.bold,
           fontSize: 18.sp,
           fontFamily: FontFamily.openSans,
@@ -140,12 +141,13 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
                         fontWeight: FontWeight.w700,
                         fontSize: 16.sp,
                         fontFamily: FontFamily.openSans,
+                        color: context.textColor,
                       ),
                     ),
                     Text(
                       '(+44) 50 9285 3022',
                       style: TextStyle(
-                        color: Colors.grey.shade500,
+                        color: context.subTextColor,
                         fontSize: 12.sp,
                         fontFamily: FontFamily.openSans,
                       ),
@@ -154,11 +156,11 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.videocam_outlined, color: Colors.black),
+                icon: Icon(Icons.videocam_outlined, color: context.textColor),
                 onPressed: () {},
               ),
               IconButton(
-                icon: const Icon(Icons.phone_outlined, color: Colors.black),
+                icon: Icon(Icons.phone_outlined, color: context.textColor),
                 onPressed: () {},
               ),
             ],
@@ -180,7 +182,7 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
             BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isMe ? const Color(0xFF1D5CBB) : Colors.white,
+          color: isMe ? const Color(0xFF1D5CBB) : context.surfaceColor,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
             topRight: const Radius.circular(16),
@@ -195,7 +197,7 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
             Text(
               msg.text,
               style: TextStyle(
-                color: isMe ? Colors.white : Colors.black87,
+                color: isMe ? Colors.white : context.textColor,
                 fontSize: 14,
               ),
             ),
@@ -207,7 +209,7 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
                 Text(
                   time,
                   style: TextStyle(
-                    color: isMe ? Colors.white70 : Colors.grey.shade400,
+                    color: isMe ? Colors.white70 : context.subTextColor,
                     fontSize: 10,
                   ),
                 ),
@@ -230,9 +232,9 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
   Widget _buildInput() {
     return Container(
       padding: const EdgeInsets.fromLTRB(8, 16, 8, 24),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: context.surfaceColor,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
@@ -247,7 +249,9 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: const Color(0xFFF3F4F6),
+                color: context.isDarkMode
+                    ? Colors.white10
+                    : const Color(0xFFF3F4F6),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: TextField(
@@ -299,7 +303,7 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
         margin: const EdgeInsets.all(16),
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.surfaceColor,
           borderRadius: BorderRadius.circular(24),
         ),
         child: GridView.count(
@@ -336,7 +340,11 @@ class _DummyChatScreenState extends State<DummyChatScreen> {
         const SizedBox(height: 8),
         Text(
           label,
-          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: context.textColor,
+          ),
         ),
       ],
     );

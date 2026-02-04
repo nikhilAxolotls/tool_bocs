@@ -2,10 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tool_bocs/core/services/storage_service.dart';
-import 'package:tool_bocs/features/bottom_navigation_bar/view/bottom_navbar_screen.dart';
-
-import 'package:tool_bocs/features/login_and_signup/view/login_screen.dart';
 import 'package:tool_bocs/features/splash/controller/on_bording_controller.dart';
 import 'package:tool_bocs/routes/app_routes.dart';
 import 'package:tool_bocs/util/colors.dart';
@@ -29,9 +25,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     Timer(
       const Duration(seconds: 0),
       () => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => BoardingPage()),
-            ),
+        context,
+        MaterialPageRoute(builder: (context) => BoardingPage()),
+      ),
     );
   }
 
@@ -39,10 +35,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     // Ensure ScreenUtil.init(...) is called in your app entry (main) before using .w/.h/.sp
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: context.scaffoldBg,
       body: Container(
         decoration: BoxDecoration(
-          color: whiteColor,
+          color: context.scaffoldBg,
           gradient: GradientColors.btnGradient,
         ),
         padding: EdgeInsets.only(top: 50.h),
@@ -107,7 +103,7 @@ class _BoardingScreenState extends State<BoardingPage> {
   Widget _buildSlide(Slide slide) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: whiteColor,
+      backgroundColor: context.scaffoldBg,
       body: Column(
         children: <Widget>[
           // ignore: sized_box_for_whitespace
@@ -173,8 +169,9 @@ class _BoardingScreenState extends State<BoardingPage> {
               fontSize: 20.sp,
               fontFamily: FontFamily.openSans,
               fontWeight: FontWeight.w700,
-              color: blackColor,
-            ), //heding Text
+              color: context.textColor,
+            ),
+            //heding Text
           ),
         ),
         SizedBox(height: 0.02.sh),
@@ -185,9 +182,10 @@ class _BoardingScreenState extends State<BoardingPage> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14.sp,
-              color: greyColor,
+              color: context.subTextColor,
               fontFamily: FontFamily.openSans,
-            ), //subtext
+            ),
+            //subtext
           ),
         ),
       ],
@@ -215,9 +213,7 @@ class _BoardingScreenState extends State<BoardingPage> {
               height: 0.35.sh,
               width: 1.sw,
               margin: EdgeInsets.all(10.w),
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
               decoration: BoxDecoration(
-                color: whiteColor,
                 borderRadius: BorderRadius.circular(25.r),
               ),
               child: Column(

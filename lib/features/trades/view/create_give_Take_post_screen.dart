@@ -27,7 +27,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
         child: Column(
@@ -37,7 +37,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
             SizedBox(height: 20.h),
             _buildAppBar(),
             Divider(
-              color: greyColor.withOpacity(0.4),
+              color: context.dividerColor,
               thickness: 1,
               height: 10.h,
             ),
@@ -45,16 +45,18 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
               margin: EdgeInsets.symmetric(vertical: 8.h),
               padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.surfaceColor,
                 borderRadius: BorderRadius.circular(10.r),
-                border: Border.all(color: Colors.grey.shade200),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade200,
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
+                border: Border.all(color: context.dividerColor),
+                boxShadow: context.isDarkMode
+                    ? []
+                    : [
+                        BoxShadow(
+                          color: Colors.grey.shade200,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
               ),
               child: Column(
                 children: [
@@ -71,16 +73,18 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
               margin: EdgeInsets.symmetric(vertical: 8.h),
               padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.surfaceColor,
                 borderRadius: BorderRadius.circular(10.r),
-                border: Border.all(color: Colors.grey.shade200),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade200,
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
+                border: Border.all(color: context.dividerColor),
+                boxShadow: context.isDarkMode
+                    ? []
+                    : [
+                        BoxShadow(
+                          color: Colors.grey.shade200,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
               ),
               child: Column(
                 children: [
@@ -100,16 +104,18 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
               margin: EdgeInsets.symmetric(vertical: 8.h),
               padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.surfaceColor,
                 borderRadius: BorderRadius.circular(10.r),
-                border: Border.all(color: Colors.grey.shade200),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade200,
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
+                border: Border.all(color: context.dividerColor),
+                boxShadow: context.isDarkMode
+                    ? []
+                    : [
+                        BoxShadow(
+                          color: Colors.grey.shade200,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
               ),
               child: Column(
                 children: [
@@ -127,16 +133,18 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
               margin: EdgeInsets.symmetric(vertical: 8.h),
               padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.surfaceColor,
                 borderRadius: BorderRadius.circular(10.r),
-                border: Border.all(color: Colors.grey.shade200),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade200,
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
+                border: Border.all(color: context.dividerColor),
+                boxShadow: context.isDarkMode
+                    ? []
+                    : [
+                        BoxShadow(
+                          color: Colors.grey.shade200,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
               ),
               child: Column(
                 children: [
@@ -166,6 +174,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
             fontSize: 18.sp,
             fontWeight: FontWeight.bold,
             fontFamily: FontFamily.openSans,
+            color: context.textColor,
           ),
         ),
         SizedBox(height: 12.h),
@@ -178,14 +187,15 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
           width: double.infinity,
           height: 45.h,
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color:
+                context.isDarkMode ? Colors.white10 : const Color(0xFFF3F4F6),
             borderRadius: BorderRadius.circular(10.r),
           ),
           alignment: Alignment.center,
           child: Text(
             'Detect GPS',
             style: TextStyle(
-              color: Colors.black54,
+              color: context.subTextColor,
               fontWeight: FontWeight.w600,
               fontSize: 14.sp,
             ),
@@ -206,13 +216,13 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
           max: 50,
           padding: EdgeInsets.zero,
           activeColor: defoultColor,
-          inactiveColor: Colors.grey.shade200,
+          inactiveColor: context.dividerColor,
           onChanged: (val) => setState(() => _diameter = val),
         ),
         SizedBox(height: 15.h),
         Text(
           'Partners within this radius will see your item.',
-          style: TextStyle(color: Colors.grey, fontSize: 10.sp),
+          style: TextStyle(color: context.subTextColor, fontSize: 10.sp),
         ),
       ],
     );
@@ -225,12 +235,13 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
         Text('Trade Details', style: _labelStyle(size: 14)),
         SizedBox(height: 8.h),
         Text('Trade Type',
-            style: TextStyle(color: Colors.grey, fontSize: 12.sp)),
+            style: TextStyle(color: context.subTextColor, fontSize: 12.sp)),
         SizedBox(height: 12.h),
         Container(
           height: 45.h,
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color:
+                context.isDarkMode ? Colors.white10 : const Color(0xFFF3F4F6),
             borderRadius: BorderRadius.circular(10.r),
           ),
           child: Row(
@@ -258,10 +269,11 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
           width: double.infinity,
           height: 150.h,
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color:
+                context.isDarkMode ? Colors.white10 : const Color(0xFFF3F4F6),
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
-                color: Colors.grey.shade300, style: BorderStyle.solid),
+                color: context.dividerColor, style: BorderStyle.solid),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -270,7 +282,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
               SizedBox(height: 8.h),
               Text(
                 'Add up to 5 photos',
-                style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+                style: TextStyle(color: context.subTextColor, fontSize: 12.sp),
               ),
             ],
           ),
@@ -385,7 +397,8 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
         Container(
           height: 45.h,
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6),
+            color:
+                context.isDarkMode ? Colors.white10 : const Color(0xFFF3F4F6),
             borderRadius: BorderRadius.circular(10.r),
           ),
           child: Row(
@@ -404,7 +417,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
           Container(
             padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade200),
+              border: Border.all(color: context.dividerColor),
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Column(
@@ -422,7 +435,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
                   max: 500,
                   padding: EdgeInsets.zero,
                   activeColor: defoultColor,
-                  inactiveColor: Colors.grey.shade200,
+                  inactiveColor: context.dividerColor,
                   onChanged: (val) => setState(() => _priceRange = val),
                 ),
                 SizedBox(height: 25.h),
@@ -438,7 +451,8 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
                     ),
                     SizedBox(width: 8.w),
                     Text('Negotiable',
-                        style: TextStyle(color: Colors.grey, fontSize: 13.sp)),
+                        style: TextStyle(
+                            color: context.subTextColor, fontSize: 13.sp)),
                   ],
                 ),
               ],
@@ -550,10 +564,10 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
         decoration: BoxDecoration(
-          color: isSelected ? defoultColor : Colors.white,
+          color: isSelected ? defoultColor : context.surfaceColor,
           borderRadius: BorderRadius.circular(25.r),
           border: Border.all(
-              color: isSelected ? defoultColor : Colors.grey.shade200),
+              color: isSelected ? defoultColor : context.dividerColor),
           boxShadow: isSelected
               ? [
                   BoxShadow(
@@ -566,7 +580,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.grey,
+            color: isSelected ? Colors.white : context.subTextColor,
             fontWeight: FontWeight.bold,
             fontSize: 13.sp,
           ),
@@ -582,12 +596,12 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
         Container(
           padding: EdgeInsets.all(12.w),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.surfaceColor,
             // borderRadius: BorderRadius.circular(12.r),
             // border: Border.all(color: Colors.grey.shade100),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.shade100,
+                color: context.dividerColor.withOpacity(0.5),
                 blurRadius: 10,
                 offset: Offset(0, 2),
               ),
@@ -623,7 +637,8 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
                         SizedBox(height: 4.h),
                         Text(
                           'Only Partners you\'ve traded with before will receive notifications.',
-                          style: TextStyle(color: greyColor, fontSize: 12.sp),
+                          style: TextStyle(
+                              color: context.subTextColor, fontSize: 12.sp),
                         ),
                       ],
                     ),
@@ -673,17 +688,17 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
       maxLines: maxLines,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.grey, fontSize: 13.sp),
+        hintStyle: TextStyle(color: context.subTextColor, fontSize: 13.sp),
         prefixIcon: prefixIcon != null
-            ? Icon(prefixIcon, color: Colors.grey, size: 20.sp)
+            ? Icon(prefixIcon, color: context.subTextColor, size: 20.sp)
             : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
-          borderSide: BorderSide(color: Colors.grey.shade200),
+          borderSide: BorderSide(color: context.dividerColor),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
-          borderSide: BorderSide(color: Colors.grey.shade200),
+          borderSide: BorderSide(color: context.dividerColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
@@ -698,14 +713,14 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: context.dividerColor),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          hint:
-              Text(hint, style: TextStyle(color: Colors.grey, fontSize: 13.sp)),
+          hint: Text(hint,
+              style: TextStyle(color: context.subTextColor, fontSize: 13.sp)),
           isExpanded: true,
           items: [],
           onChanged: (val) {},
@@ -727,7 +742,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
           child: Text(
             label,
             style: TextStyle(
-              color: isSelected ? Colors.white : Colors.black54,
+              color: isSelected ? Colors.white : context.subTextColor,
               fontWeight: FontWeight.w600,
               fontSize: 12.sp,
             ),
@@ -742,7 +757,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
       width: 70.w,
       height: 70.w,
       decoration: BoxDecoration(
-        color: const Color(0xFFF3F4F6),
+        color: context.isDarkMode ? Colors.white10 : const Color(0xFFF3F4F6),
         borderRadius: BorderRadius.circular(8.r),
       ),
     );
@@ -755,10 +770,10 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
         decoration: BoxDecoration(
-          color: isSelected ? defoultColor : Colors.white,
+          color: isSelected ? defoultColor : context.surfaceColor,
           borderRadius: BorderRadius.circular(25.r),
           border: Border.all(
-              color: isSelected ? defoultColor : Colors.grey.shade200),
+              color: isSelected ? defoultColor : context.dividerColor),
           boxShadow: isSelected
               ? [
                   BoxShadow(
@@ -771,7 +786,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.grey,
+            color: isSelected ? Colors.white : context.subTextColor,
             fontWeight: FontWeight.bold,
             fontSize: 13.sp,
           ),
@@ -785,6 +800,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
       fontWeight: FontWeight.bold,
       fontSize: size.sp,
       fontFamily: FontFamily.openSans,
+      color: context.textColor,
     );
   }
 
@@ -798,7 +814,8 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: blackColor, size: 22),
+            icon:
+                Icon(Icons.arrow_back_ios, color: context.textColor, size: 22),
             onPressed: () => Navigator.pop(context),
           ),
           SizedBox(width: 45.w),
@@ -806,7 +823,7 @@ class _CreateGivePostScreenState extends State<CreateGivePostScreen> {
             child: Text(
               title, //'Create Give Post',
               style: TextStyle(
-                color: Colors.black,
+                color: context.textColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 18.sp,
                 fontFamily: FontFamily.openSans,

@@ -10,7 +10,7 @@ class TradeSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       body: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -34,7 +34,7 @@ class TradeSuccessScreen extends StatelessWidget {
                   fontSize: 28.sp,
                   fontWeight: FontWeight.w800,
                   fontFamily: FontFamily.openSans,
-                  color: blackColor,
+                  color: context.textColor,
                 ),
               ),
               SizedBox(height: 16.h),
@@ -43,13 +43,14 @@ class TradeSuccessScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14.sp,
-                  color: greyColor,
+                  color: context.subTextColor,
                   fontWeight: FontWeight.w500,
                   height: 1.5,
                 ),
               ),
               SizedBox(height: 48.h),
               _buildActionButton(
+                context,
                 label: 'View Trade Details',
                 onPressed: () => Navigator.pushReplacementNamed(
                     context, AppRoutes.tradeDetails),
@@ -57,6 +58,7 @@ class TradeSuccessScreen extends StatelessWidget {
               ),
               SizedBox(height: 12.h),
               _buildActionButton(
+                context,
                 label: 'Go to Home',
                 onPressed: () => Navigator.pushNamedAndRemoveUntil(
                     context, AppRoutes.bottomNavBar, (route) => false),
@@ -69,7 +71,7 @@ class TradeSuccessScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButton(
+  Widget _buildActionButton(BuildContext context,
       {required String label,
       required VoidCallback onPressed,
       required bool isPrimary}) {
@@ -79,7 +81,7 @@ class TradeSuccessScreen extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isPrimary ? defoultColor : Colors.white,
+          backgroundColor: isPrimary ? defoultColor : context.surfaceColor,
           side: isPrimary ? null : BorderSide(color: defoultColor, width: 1.5),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),

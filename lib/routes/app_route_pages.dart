@@ -24,6 +24,8 @@ import 'package:tool_bocs/features/trade_steps_flow/view/trade_success_screen5.d
 import 'package:tool_bocs/features/trades/view/trade_details_screen.dart';
 import 'package:tool_bocs/features/profile/view/terms_conditions_screen.dart';
 import 'package:tool_bocs/features/profile/view/privacy_policy_screen.dart';
+import 'package:tool_bocs/features/profile/view/theme_change_screen.dart';
+import 'package:tool_bocs/features/network_connectivity/view/no_internet_screen.dart';
 
 import 'app_routes.dart';
 
@@ -54,5 +56,7 @@ class AppPages {
     AppRoutes.tradeDetails: (_) => const TradeDetailsScreen(),
     AppRoutes.termsConditions: (_) => const TermsConditionsScreen(),
     AppRoutes.privacyPolicy: (_) => const PrivacyPolicyScreen(),
+    AppRoutes.themeChange: (_) => const ThemeChangeScreen(),
+    AppRoutes.noInternet: (_) => const NoInternetScreen(),
   };
 }

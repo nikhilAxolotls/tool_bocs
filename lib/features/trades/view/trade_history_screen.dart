@@ -22,7 +22,8 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
     final shimmer = context.watch<ShimmerController>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FB),
+      backgroundColor:
+          context.isDarkMode ? Colors.black : const Color(0xFFF8F9FB),
       appBar: _buildAppBar(context),
       body: shimmer.isLoading
           ? _buildShimmer(context)
@@ -41,17 +42,17 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       elevation: 0,
       leading: IconButton(
         onPressed: () => Navigator.pop(context),
-        icon: Icon(Icons.arrow_back_ios, color: blackColor),
+        icon: Icon(Icons.arrow_back_ios, color: context.textColor),
       ),
       centerTitle: true,
       title: Text(
         'Trade History',
         style: TextStyle(
-          color: blackColor,
+          color: context.textColor,
           fontSize: 18.sp,
           fontWeight: FontWeight.w700,
           fontFamily: FontFamily.openSans,
@@ -71,7 +72,7 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.w700,
-              color: blackColor,
+              color: context.textColor,
               fontFamily: FontFamily.openSans,
             ),
           ),
@@ -98,15 +99,18 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
       width: 115.w,
       padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 10.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(15.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
+        border: Border.all(color: context.dividerColor),
+        boxShadow: context.isDarkMode
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
       ),
       child: Column(
         children: [
@@ -131,7 +135,7 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
             label,
             style: TextStyle(
               fontSize: 12.sp,
-              color: Colors.grey.shade600,
+              color: context.subTextColor,
               fontWeight: FontWeight.w600,
               fontFamily: FontFamily.openSans,
             ),
@@ -153,9 +157,9 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.surfaceColor,
               borderRadius: BorderRadius.circular(20.r),
-              border: Border.all(color: Colors.grey.shade300),
+              border: Border.all(color: context.dividerColor),
             ),
             child: Row(
               children: [
@@ -163,7 +167,7 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
                   'Newest',
                   style: TextStyle(
                     fontSize: 12.sp,
-                    color: blackColor,
+                    color: context.textColor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -184,16 +188,16 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
         margin: EdgeInsets.only(right: 8.w),
         padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 8.h),
         decoration: BoxDecoration(
-          color: isSelected ? defoultColor : Colors.white,
+          color: isSelected ? defoultColor : context.surfaceColor,
           borderRadius: BorderRadius.circular(20.r),
           border: Border.all(
-              color: isSelected ? defoultColor : Colors.grey.shade300),
+              color: isSelected ? defoultColor : context.dividerColor),
         ),
         child: Text(
           label,
           style: TextStyle(
             fontSize: 14.sp,
-            color: isSelected ? Colors.white : Colors.grey.shade600,
+            color: isSelected ? Colors.white : context.subTextColor,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -232,15 +236,18 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
         margin: EdgeInsets.only(bottom: 15.h),
         padding: EdgeInsets.all(10.w),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.surfaceColor,
           borderRadius: BorderRadius.circular(15.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
+          border: Border.all(color: context.dividerColor),
+          boxShadow: context.isDarkMode
+              ? []
+              : [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
         ),
         child: Row(
           children: [
@@ -268,7 +275,7 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w700,
-                          color: blackColor,
+                          color: context.textColor,
                         ),
                       ),
                       Container(
@@ -298,8 +305,8 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
                           size: 14.sp, color: Colors.grey),
                       SizedBox(width: 5.w),
                       Text(user,
-                          style:
-                              TextStyle(fontSize: 12.sp, color: Colors.grey)),
+                          style: TextStyle(
+                              fontSize: 12.sp, color: context.subTextColor)),
                     ],
                   ),
                   SizedBox(height: 5.h),
@@ -309,8 +316,8 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
                           size: 14.sp, color: Colors.grey),
                       SizedBox(width: 5.w),
                       Text(date,
-                          style:
-                              TextStyle(fontSize: 12.sp, color: Colors.grey)),
+                          style: TextStyle(
+                              fontSize: 12.sp, color: context.subTextColor)),
                     ],
                   ),
                   SizedBox(height: 5.h),
@@ -344,8 +351,8 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
                               ),
                               decoration: BoxDecoration(
                                 color: Colors.transparent,
-                                border:
-                                    Border.all(color: greyColor, width: 1.w),
+                                border: Border.all(
+                                    color: context.dividerColor, width: 1.w),
                                 borderRadius: BorderRadius.circular(15.r),
                               ),
                               child: Row(
@@ -360,7 +367,9 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
                                     "Remove",
                                     style: TextStyle(
                                       fontSize: 10.sp,
-                                      color: greyColor, //redColor,
+                                      color: context.isDarkMode
+                                          ? Colors.red.shade300
+                                          : greyColor, //redColor,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -431,7 +440,7 @@ class _TradeHistoryScreenState extends State<TradeHistoryScreen> {
               child: Container(
                 padding: EdgeInsets.all(10.w),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: context.surfaceColor,
                   borderRadius: BorderRadius.circular(15.r),
                 ),
                 child: Row(

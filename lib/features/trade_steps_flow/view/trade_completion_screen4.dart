@@ -10,7 +10,7 @@ class TradeCompletionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bg1Color,
+      backgroundColor: context.scaffoldBg,
       appBar: _buildAppBar(context),
       body: Stack(
         children: [
@@ -19,11 +19,11 @@ class TradeCompletionScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildStepper(),
+                _buildStepper(context),
                 SizedBox(height: 10.h),
                 _buildHandshakeBanner(),
                 SizedBox(height: 24.h),
-                _buildTradeSummary(),
+                _buildTradeSummary(context),
                 SizedBox(height: 16.h),
                 _buildChatTicketCard(context),
               ],
@@ -40,17 +40,17 @@ class TradeCompletionScreen extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: context.scaffoldBg,
       elevation: 0,
       leading: IconButton(
         onPressed: () => Navigator.pop(context),
-        icon: Icon(Icons.arrow_back_ios, color: blackColor, size: 20.sp),
+        icon: Icon(Icons.arrow_back_ios, color: context.textColor, size: 20.sp),
       ),
       centerTitle: true,
       title: Text(
         'Complete the Trade',
         style: TextStyle(
-          color: blackColor,
+          color: context.textColor,
           fontSize: 18.sp,
           fontWeight: FontWeight.w700,
           fontFamily: FontFamily.openSans,
@@ -59,27 +59,27 @@ class TradeCompletionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStepper() {
+  Widget _buildStepper(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: context.scaffoldBg,
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: Row(
         children: [
-          _buildStepSegment(isActive: true),
-          _buildStepSegment(isActive: true),
-          _buildStepSegment(isActive: true),
+          _buildStepSegment(context, isActive: true),
+          _buildStepSegment(context, isActive: true),
+          _buildStepSegment(context, isActive: true),
         ],
       ),
     );
   }
 
-  Widget _buildStepSegment({required bool isActive}) {
+  Widget _buildStepSegment(BuildContext context, {required bool isActive}) {
     return Expanded(
       child: Container(
         height: 5.h,
         margin: EdgeInsets.symmetric(horizontal: 2.w),
         decoration: BoxDecoration(
-          color: isActive ? defoultColor : greyColor.withOpacity(0.3),
+          color: isActive ? defoultColor : context.dividerColor,
           borderRadius: BorderRadius.circular(8.r),
         ),
       ),
@@ -104,13 +104,13 @@ class TradeCompletionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTradeSummary() {
+  Widget _buildTradeSummary(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 12.w),
       child: RichText(
         text: TextSpan(
           style: TextStyle(
-            color: const Color(0xFF475467),
+            color: context.subTextColor,
             fontSize: 16.sp,
             fontFamily: FontFamily.openSans,
             height: 1.5,
@@ -123,10 +123,10 @@ class TradeCompletionScreen extends StatelessWidget {
             ),
             const TextSpan(text: 'accepted your offer -\n'),
             const TextSpan(text: 'Taking Icecream from you, Giving you\n'),
-            const TextSpan(
+            TextSpan(
               text: 'Money ',
               style: TextStyle(
-                  fontWeight: FontWeight.w800, color: Color(0xFF2D2D2D)),
+                  fontWeight: FontWeight.w800, color: context.textColor),
             ),
             const TextSpan(text: 'in return'),
           ],
@@ -143,22 +143,26 @@ class TradeCompletionScreen extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.surfaceColor,
           borderRadius: BorderRadius.circular(16.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          boxShadow: context.isDarkMode
+              ? []
+              : [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.04),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
         ),
         child: Row(
           children: [
             Container(
               padding: EdgeInsets.all(10.w),
               decoration: BoxDecoration(
-                color: const Color(0xFFE6F0FF),
+                color: context.isDarkMode
+                    ? Colors.white10
+                    : const Color(0xFFE6F0FF),
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: Icon(Icons.chat_bubble_outline,
@@ -174,14 +178,14 @@ class TradeCompletionScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w700,
-                      color: blackColor,
+                      color: context.textColor,
                     ),
                   ),
                   Text(
                     'Spend a Ticket (15 mtrs)',
                     style: TextStyle(
                       fontSize: 12.sp,
-                      color: greyColor,
+                      color: context.subTextColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -189,7 +193,7 @@ class TradeCompletionScreen extends StatelessWidget {
               ),
             ),
             Icon(Icons.arrow_forward_ios,
-                color: const Color(0xFF2D2D2D), size: 18.sp),
+                color: context.textColor, size: 18.sp),
           ],
         ),
       ),
@@ -200,14 +204,16 @@ class TradeCompletionScreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            offset: const Offset(0, -4),
-            blurRadius: 10,
-          ),
-        ],
+        color: context.surfaceColor,
+        boxShadow: context.isDarkMode
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  offset: const Offset(0, -4),
+                  blurRadius: 10,
+                ),
+              ],
       ),
       child: ElevatedButton(
         onPressed: () {
