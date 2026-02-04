@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                   height: 56.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(color: context.dividerColor),
+                    border: Border.all(color: greyColor.withOpacity(0.5)),
                   ),
                   child: Row(
                     children: [
@@ -78,7 +78,7 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(width: 8.w),
                       VerticalDivider(
                         thickness: 1.w,
-                        color: context.dividerColor,
+                        color: greyColor.withOpacity(0.5),
                       ),
                       SizedBox(width: 2.w),
                       Expanded(

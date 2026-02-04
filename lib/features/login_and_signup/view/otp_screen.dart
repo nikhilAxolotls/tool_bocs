@@ -78,7 +78,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       border: Border.all(
                         color: _controllers[index].text.isNotEmpty
                             ? defoultColor
-                            : context.dividerColor,
+                            : greyColor.withOpacity(0.5),
                       ),
                       borderRadius: BorderRadius.circular(8.r),
                     ),

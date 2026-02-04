@@ -223,11 +223,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             prefixIcon: Icon(icon, color: context.subTextColor, size: 20.sp),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(color: context.dividerColor),
+              borderSide: BorderSide(color: greyColor.withOpacity(0.5)),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(color: context.dividerColor),
+              borderSide: BorderSide(color: greyColor.withOpacity(0.5)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
